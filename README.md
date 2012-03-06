@@ -9,6 +9,6 @@ It provides a REST API for data management and it uses mathplotlib for plotting.
 
 Dependencies:
   * django.contrib.admin
-  * djangorestframework
+  * djangorestframework (http://django-rest-framework.org)
 
 These needs to be added to INSTALLED_APPS in your settings.py file.
