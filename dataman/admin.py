@@ -1,4 +1,4 @@
-from restdata.models import DataSet, DataEntry
+from dataman.models import DataSet, DataEntry
 from django.contrib import admin
 
 class DataEntryInLine(admin.TabularInline):

@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 from djangorestframework.views import ListOrCreateModelView, InstanceModelView
-from restdata.resources import DataSetResource, DataResource
+from dataman.resources import DataSetResource, DataResource
 
 
 urlpatterns = patterns('',

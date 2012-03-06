@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from djangorestframework.resources import ModelResource
-from restdata.models import DataSet, DataEntry
+from dataman.models import DataSet, DataEntry
 
 class DataSetResource(ModelResource):
     """
