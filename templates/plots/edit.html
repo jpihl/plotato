@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block hero %}
+<h1>Edit Plot</h1>
+<p>
+<form action="/plots/{{ project_id }}/edit/{{ plot_id }}/" method="post">
+{% csrf_token %}
+{{ plot_form.as_p }}
+<input type="submit" value="Save" />
+</form>
+</p>
+{% endblock %}

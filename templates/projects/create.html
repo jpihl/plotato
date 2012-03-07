@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block create_active %} class="active" {% endblock %}
+
+{% block hero %}
+
+<h1>Create New Project</h1>
+
+<p>
+<form action="/create/" method="post">
+{% csrf_token %}
+{{ project_form.as_p }}
+<input type="submit" value="Create" />
+</form>
+</p>
+
+{% endblock %}
