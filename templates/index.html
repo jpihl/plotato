@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="hero-unit">
+<h1>Welcome to plotato!</h1>
+        <p>This web appliction is designed to present the results using user designed plots. The plots are generated using mathplot lib. This site also provides a RESTapi which can be used for uploading results.</p>
+<p><a class="btn btn-primary btn-large" href="/project/create">Create New Project &raquo;</a></p>
+</div>
+{% if project_list %}
+<div class ="row">
+	{% for project in project_list %}
+	{% cycle '' '' '' '' '</div><p></p> <div class = row>' %}
+    <div class="span3">
+      <div class="thumbnail">
+        {% if project.plots.get_query_set %}
+        <img src="/plot/{{project.plots.get_query_set.0.key}}/260x180" alt="">
+        {% endif %}
+        <div class="caption">
+          <h5>{{ project.name }}</h5>
+          <p>{{project.description}}</p><!--|slice:":100"}}...</p>-->
+          <p><a href='/project/details/{{ project.key }}' class="btn">View details &raquo;</a></p>
+        </div>
+      </div>
+    </div>
+	{% endfor %}
+</div>
+{% endif %}
+{% endblock %}

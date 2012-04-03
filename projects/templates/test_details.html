@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <div class="page-header">
+                <h1>{{ test.name }}<small> details</small></h1>
+                <br>
+                    Test Key: 
+                    <span class="label label-info">
+                        {{ test.key }}
+                    </span>
+            </div>
+            <div class="row">
+                <div class="span3">
+                    <div class="well">
+                    <ul class="nav nav-list">
+                    <li class="nav-header">
+                        Actions
+                    </li>
+                    <li>
+                    <a href="/test/edit/{{test.key}}">Edit This Test</a>
+                    </li>
+                    <li>
+                    <a href="/project/details/{{test.project.key}}">Back to Project</a>
+                    </li>
+                    </div>
+                    <h4>Test Description</h4>
+                    <p>
+                    {{ test.description }}
+                    </p>
+                </div>
+                <div class="span9">
+                    {% if test.runs.count > 0 %}
+                    <div class="page-header">
+                        <h2>Runs</h2>
+                        <p>The following contains the runs of test {{test.name}}.</p>
+                    </div>
+                    <div class = row>
+                        <div class="span9">
+                            <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th>Run</th>
+                                    <th>Date</th>
+                                    {% for key in test.runs.get_query_set.0.data.keys %}
+                                    <th>{{key}}</th>
+                                    {% endfor %}
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    {% for run in test.runs.all %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{run.created}}</td>
+                                            {% for value in run.data.values%}
+                                                <td>{{value}}</td>
+                                            {%endfor%}
+                                        </tr>
+                                    {%endfor%}
+                                </tbody>
+                              </table>
+                            </div>
+                        <!--
+                        {% for run in test.runs.all %}
+                        <div class="span3">
+                            <h3>{{ run.created }}</h3>
+                            
+                                <p>{{key}}</p>
+                            {% endfor %}
+                            <p><a href="/run/delete/{{run.key}}" class="btn btn-danger">Delete</a></p>
+                        </div>
+                        
+                    -->
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+        
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

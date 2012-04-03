@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <div class="page-header">
+                <h1>{{ project.name }}<small> details</small></h1>
+                    <br>
+                    Project Key: 
+                    <span class="label label-info">
+                        {{ project.key }}
+                    </span>
+            </div>
+            <div class="row">
+                <div class="span3">
+                    <div class="well">
+                    <ul class="nav nav-list">
+                    <li class="nav-header">
+                        Actions
+                    </li>
+                    
+                    <!--<li class="active">-->
+                    <li>
+                    <a href="/project/edit/{{project.key}}">Edit This Project</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Add <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/plot/create/{{project.key}}">New Plot</a>
+                            </li>
+                            <li>
+                                <a href="/test/create/{{project.key}}">New Test</a>
+                            </li>
+                        </ul>
+                    </li>
+                    </ul>
+                    </div>
+                    <h4> Project Description </h4>
+                    <p>
+                    {{ project.description }}
+                    </p>
+                </div>
+                <div class="span9">
+                    {% if project.plots.count > 0 %}
+                    <div class="page-header">
+                        <h2>Plots</h2>
+                        <p>The following contains the plots of {{project.name}}.</p>
+                    </div>
+                    <div class ="row">
+                        <div class="span9">
+                            <ul class="thumbnails">
+                                {% for plot in project.plots.all %}
+                                <li class="span3">
+                                  <div class="thumbnail">
+                                    <img src="/plot/{{plot.key}}/260x180" alt="">
+                                    <div class="caption">
+                                      <h5>{{plot.name}}</h5>
+                                      <p>{{plot.description}}</p>
+                                      <p><a href="/plot/details/{{plot.key}}" class="btn btn-primary">Details</a></p>
+                                    </div>
+                                  </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if project.tests.count > 0 %}
+                    <div class="page-header">
+                        <h2>Tests</h2>
+                        <p>The following contains the tests of {{project.name}}.</p>
+                    </div>
+                    <div class = row>
+                        {% for test in project.tests.all %}
+                        <div class="span3">
+                            <h3>{{ test.name }}</h3>
+                            <p>{{ test.description }}</p>
+                            <p>No. of runs: {{ test.runs.count }}</p>
+                            <p><a href="/test/details/{{test.key}}" class="btn btn-primary">Details</a></p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

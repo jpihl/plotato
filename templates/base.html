@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>{% block title %}Plotato - plot, plot, plot!{% endblock %}</title>
+    <meta name="description" content="A plot presentation tool for arcademic and other suitable projects.">
+    <meta name="keywords" content="test, plots, charts">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="/static/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+    {% block extra_head %}{% endblock %}
+  </head>
+  
+  {% load active_page %}
+
+  <body {% block body_tag %}{%endblock%}>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">plotato</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="{% active request "^/$" %}"><a href="/"><i class="icon-home icon-white"></i> Home</a></li>
+              <li class="{% active request "^/project/create$" %}"><a href="/project/create">Create Project</a></li>
+              <li class="{% active request "^/about/$" %}"><a href="/about">About</a></li>
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div><!-- /.container -->
+      </div><!-- /.navbar-inner -->
+    </div><!-- /.navbar -->
+    <div class="container">
+      {% block content %} {% endblock %}
+    </div>
+
+    <!-- ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    {% block scripts %}{% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+
+  </body>
+</html>
+
