@@ -1,24 +1,33 @@
-Plotato
+plotato
 =====
 
-*Please note that plotato is not currently in a stage intented for online use.*
+*Please note that plotato is not currently in a stage intended for online use.*
 
-Plotato is a django 1.3.1 web application for presenting user defined plots. It uses the boostrap from Twitter (http://twitter.github.com/bootstrap/).
+plotato is a django 1.3.1 web application for presenting user defined plots. It uses the bootstrap from Twitter (http://twitter.github.com/bootstrap/).
 
-It provides a REST API for data management and it uses mathplotlib for plotting.
+For data access and manipulation it provides a REST API for data management and it uses matplotlib for plotting.
 
-Dependencies:
-
-  * django.contrib.admin
-  * djangorestframework (http://django-rest-framework.org)
-
-These needs to be added to INSTALLED_APPS in your settings.py file.
+To get started follow the guide below, but please note that the guide is only tested on Linux. It should however work on both windows and mac too without too much hassle.
 
 How to Get Started
 =====
-  * Install django.
-  * Install djangorestframework.
-  * Start a django project using the folloing command: "django-admin.py startproject plotato" ("plotato" or whatever you like..).
-  * Download the plotato source and place it in the same folder as the newly created project.
-  * Fill in your configuration in the settings.py file add the following to your INSTALLED_APPS: "django.contrib.admin, djangorestframework, dataman, projects, projects.plots".
-  * Now sync the database using the following command "./manage.py syncdb", and start the server using "./manage.py runserver [DESIRED_PORT]".
+  * sudo apt-get install python pip
+  * Download and extract project
+  * Go into the directory and run the following commands
+  * virtualenv .
+  * source bin/activate
+  * pip install hg+https://bitbucket.org/wkornewald/django-nonrel
+  * pip install hg+https://bitbucket.org/wkornewald/djangotoolbox
+  * pip install git+https://github.com/django-nonrel/mongodb-engine
+  * pip install django-tastypie
+  * pip install git+https://github.com/andresdouglas/django-tastypie-nonrel.git
+  * pip install numpy
+  * pip install matplotlib
+  * setup a mongodb server, see http://www.mongodb.org/display/DOCS/Quickstart
+  * ./manage syncdb
+  * ./manage runserver 8080
+  * Open your browser and goto http://localhost:8080/
+  * You should now see plotato running, and you can freely add projects tests and plots.
+  * Note: Runs are added via the tasty pie rest API.
+  * If you want to see examples of how to get and retrieve data via the tastypie rest API look in the tools folder.
+  * Enjoy!
