@@ -19,9 +19,9 @@ How to Get Started
   * source bin/activate
   * pip install hg+https://bitbucket.org/wkornewald/django-nonrel
   * pip install hg+https://bitbucket.org/wkornewald/djangotoolbox
-  * pip install git+https://github.com/django-nonrel/mongodb-engine
+  * pip install git+git://github.com/django-nonrel/mongodb-engine
   * pip install django-tastypie
-  * pip install git+https://github.com/andresdouglas/django-tastypie-nonrel.git
+  * pip install git+git://github.com/andresdouglas/django-tastypie-nonrel.git
   * pip install numpy
   * pip install matplotlib
   * setup a mongodb server, see http://www.mongodb.org/display/DOCS/Quickstart
