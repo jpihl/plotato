@@ -25,8 +25,8 @@ How to Get Started
   * pip install numpy
   * pip install matplotlib
   * setup a mongodb server, see http://www.mongodb.org/display/DOCS/Quickstart
-  * ./manage syncdb
-  * ./manage runserver 8080
+  * ./manage.py syncdb
+  * ./manage.py runserver 8080
   * Open your browser and goto http://localhost:8080/
   * You should now see plotato running, and you can freely add projects tests and plots.
   * Note: Runs are added via the tasty pie rest API.
