@@ -11,7 +11,7 @@ To get started follow the guide below, but please note that the guide is only te
 
 How to Get Started
 =====
-  * sudo apt-get install python pip
+  * sudo apt-get install python pip virtualenv
   * Download and extract project
   * Go into the directory and run the following commands
   * virtualenv .
