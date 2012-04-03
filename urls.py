@@ -5,13 +5,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'plotato.views.home', name='home'),
-
-
-    # (r'^', include('plotato_nosql.projects.urls')),
-    (r'^plot/', include('plotato_nosql.plots.urls')),
-       (r'^', include('plotato_nosql.projects.urls')),
+    (r'^plot/', include('plotato.plots.urls')),
+       (r'^', include('plotato.projects.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
 
