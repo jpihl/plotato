@@ -11,9 +11,10 @@ To get started follow the guide below, but please note that the guide is only te
 
 How to Get Started
 =====
-  * sudo apt-get install python pip virtualenv
+  * sudo apt-get install python pip
   * Download and extract project
   * Go into the directory and run the following commands
+  * pip install virtualenv
   * virtualenv .
   * source bin/activate
   * pip install hg+https://bitbucket.org/wkornewald/django-nonrel
