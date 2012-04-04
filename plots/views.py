@@ -4,7 +4,6 @@ from projects.models import Project
 from django.template import RequestContext
 from plots.forms import PlotForm
 from django.http import HttpResponse
-from projects.views import *
 
 import matplotlib.pyplot
 from pylab import figure, axes, pie, title

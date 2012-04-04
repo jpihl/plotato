@@ -10,7 +10,6 @@ def main():
     #add_project()
     #add_test()
     add_run()
-    add_user()
 
 def add_project():
     print "Adding Project..."
@@ -77,9 +76,6 @@ def add_run():
         response = urllib2.urlopen(request)
     except urllib2.HTTPError, error:
         print error.read()
-def add_user():
-    print "Adding User..."
-
 
 if __name__ == '__main__':
     main()

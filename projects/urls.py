@@ -19,14 +19,8 @@ urlpatterns = patterns('projects',
     url(r'^test/edit/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',         'views.edit_test'),
     url(r'^test/details/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',      'views.details_test'),
     url(r'^test/delete/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',       'views.details_test'),
-   # url(r'^test/run/create/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',        'views.create_run'),
-   # url(r'^run/edit/(?P<run_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                'views.edit_run'),
-   # url(r'^run/details/(?P<run_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',             'views.details_run'),
 )
 
 urlpatterns += patterns('',
-    # URLs for adding results
-    # (r'^result/add/json/$', 'add_json_results'),
-    # (r'^result/add/$', 'add_result'),
     (r'^api/', include(rest_api.urls)),
 )
