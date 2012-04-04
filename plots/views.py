@@ -4,6 +4,7 @@ from projects.models import Project
 from django.template import RequestContext
 from plots.forms import PlotForm
 from django.http import HttpResponse
+from projects.views import *
 
 import matplotlib.pyplot
 from pylab import figure, axes, pie, title
@@ -34,7 +35,8 @@ def create(request, project_id):
         plot = form.save()
         plot.project = project
         plot.save()
-        return redirect(details, plot_id=plot.pk)
+        #ugly quick fix
+        return redirect("/project/details/"+project.key)
     return render_to_response('plot_constructor.html',
                              {'project': project,
                               'errors': form.errors},
@@ -59,7 +61,8 @@ def delete(request, plot_id):
     c = Plot.objects.get(pk=plot_id)
     project = c.project
     c.delete()
-    return redirect(project_details, project_id = project.key)
+    #Ugly quick fix
+    return redirect("/project/details/"+project.key)
 
 def details(request, plot_id):
     plot = get_object_or_404(Plot, pk=plot_id)
