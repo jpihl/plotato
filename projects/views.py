@@ -1,14 +1,13 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect
-
+from django.contrib import messages
 from models import Project, Test, Run
-from forms import ProjectForm, TestForm
+from forms import ProjectForm, TestForm, UserForm 
 from django.template import RequestContext
 
 from django.contrib.auth import logout, authenticate, login
 
-def home(request, error = None):
-    return render_to_response('index.html', {'project_list':  Project.objects.all().order_by('name'), 'error': error},context_instance=RequestContext(request))
-
+def home(request):
+    return render_to_response('index.html', {'project_list':  Project.objects.all().order_by('name'), 'login_error': "lol"}, context_instance=RequestContext(request))
 
 def about(request):
     return render_to_response('about.html', {}, context_instance=RequestContext(request))
@@ -131,19 +130,22 @@ def edit_user(request, user_id):
 
 def log_out(request):
     logout(request)
+    return redirect(home)
 
 def log_in(request):
     username = request.POST['username']
     password = request.POST['password']
+
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
             login(request, user)
-            redirect(home)
-        else:
             return redirect(home)
-            # Return a 'disabled account' error message
+        else:
+            messages.add_message(request, messages.ERROR, 'ERROR: User is not active!')
+            return redirect(home)
     else:
+        messages.add_message(request, messages.ERROR, 'ERROR: Username or password not valid.')
         return redirect(home)
 
 

@@ -160,3 +160,16 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     "django.contrib.auth.context_processors.auth",
 )
+
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-block alert-debug',
+    messages.INFO: 'alert-block alert-info',
+    messages.SUCCESS: 'alert-block alert-success',
+    messages.WARNING: 'alert-block alert-warning',
+    messages.ERROR: 'alert-block alert-error'
+}

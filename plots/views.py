@@ -34,7 +34,9 @@ def create(request, project_id):
         plot = form.save()
         plot.project = project
         plot.save()
-        #ugly quick fix
+        #ugly quick fix, try this instead:
+        #from django.core.urlresolvers import reverse
+        #reverse('products.views.filter_by_led')
         return redirect("/project/details/"+project.key)
     return render_to_response('plot_constructor.html',
                              {'project': project,
@@ -60,7 +62,9 @@ def delete(request, plot_id):
     c = Plot.objects.get(pk=plot_id)
     project = c.project
     c.delete()
-    #Ugly quick fix
+    #ugly quick fix, try this instead:
+    #from django.core.urlresolvers import reverse
+    #reverse('products.views.filter_by_led')
     return redirect("/project/details/"+project.key)
 
 def details(request, plot_id):

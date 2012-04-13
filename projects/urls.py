@@ -10,10 +10,10 @@ rest_api.register(RunResource())
 
 urlpatterns = patterns('projects',
 	url(r'^$',                                                                                            'views.home'),
-    url(r'^about/$',                                                                                      'views.about'),
+    url(r'^about$',                                                                                       'views.about'),
 
-    url(r'^user/login/$',                                                                                 'views.log_in'),
-    url(r'^user/logout/$',                                                                                'views.log_out'),
+    url(r'^user/login$',                                                                                  'views.log_in'),
+    url(r'^user/logout$',                                                                                 'views.log_out'),
     url(r'^user/create/$',                                                                                'views.create_user'),
     url(r'^user/edit/$',                                                                                  'views.edit_user'),
     url(r'^user/details/$',                                                                               'views.details_user'),

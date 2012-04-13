@@ -30,15 +30,44 @@
           <a class="brand" href="/">plotato</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="{% active request "^/$" %}"><a href="/"><i class="icon-home icon-white"></i> Home</a></li>
-              <li class="{% active request "^/project/create$" %}"><a href="/project/create">Create Project</a></li>
-              <li class="{% active request "^/about/$" %}"><a href="/about">About</a></li>
+              <li class="{% active request "^/$" %}">              <a href="/">              <i class="icon-home icon-white"></i> Home</a>      </li>
+              <li class="{% active request "^/user/create/$" %}">  <a href="/user/create/">  <i class="icon-user icon-white"></i> Create User</a></li>
+              <li class="{% active request "^/project/create$" %}"><a href="/project/create"><i class="icon-signal icon-white"></i> Create Project</a></li>
+              <li class="{% active request "^/about$" %}">         <a href="/about">         <i class="icon-info-sign icon-white"></i> About</a></li>
             </ul>
+            {% if user.is_anonymous %}
+            <ul class="nav pull-right">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</b></a>
+                  <ul class="dropdown-menu">
+                    <form class="well" action="/user/login" method="post">
+                      {% csrf_token %}
+                      <legend>Login:</legend>
+                      <input id="id_username" name="username" type="text" class="span3" placeholder="Username…">
+                      <input id="id_password" name="password" type="password" class="span3" placeholder="Password…">
+                      <button type="submit" class="btn btn-small">Submit</button>
+                    </form>
+                  </ul>
+                </li>
+            </ul>
+            {% else %}
+              <p class="navbar-text pull-right">You are logged in as {{user.username}} - <a href="/user/logout">Log out</a></p>
+            {% endif %}
           </div><!-- /.nav-collapse -->
+            
         </div><!-- /.container -->
       </div><!-- /.navbar-inner -->
     </div><!-- /.navbar -->
     <div class="container">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert {%if message.tags %}{{ message.tags }}{%endif%} fade in">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading">Message:</h4>
+            <p>{{ message }}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
       {% block content %} {% endblock %}
     </div>
 
@@ -47,7 +76,11 @@
     {% block scripts %}{% endblock %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-
+    <script>
+      $('.dropdown-menu').find('form').click(function (e) {
+        e.stopPropagation();
+      });
+    </script>
   </body>
 </html>
 
