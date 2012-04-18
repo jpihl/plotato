@@ -1,0 +1,17 @@
+Reorganize the structure of the django project
+	For inspiration see: https://code.djangoproject.com/wiki/DjangoResources#Open-SourceDjangoprojects
+
+Implement support for project owners
+	For inspiration see: http://stackoverflow.com/questions/999078/object-ownership-in-django
+Implement support for project contributers
+
+Implement for users to generate API-keys for the RESTAPI
+
+Provide better tools e.g. well documented python functions for insertion and extraction of data.
+
+Provide users, not logged in, with a login page when trying to access restricted pages.
+	For inspiration see: http://stackoverflow.com/questions/2723842/django-message-framework-and-login-required
+
+Enable cascading when deleting data.
+
+Hide restricted functionality

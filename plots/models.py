@@ -11,3 +11,7 @@ class Plot(models.Model):
     description = models.TextField()
     code        = models.TextField('plot code', default='f = figure(figsize=(3,3))')
     created     = models.DateTimeField(auto_now_add=True)
+    def __unicode__(self):
+        return self.name
+    def user_can_manage_me(self, user):
+        return user == self.project.owner

@@ -31,8 +31,11 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li class="{% active request "^/$" %}">              <a href="/">              <i class="icon-home icon-white"></i> Home</a>      </li>
+              {% if user.is_anonymous %}
               <li class="{% active request "^/user/create/$" %}">  <a href="/user/create/">  <i class="icon-user icon-white"></i> Create User</a></li>
+              {% else %}
               <li class="{% active request "^/project/create$" %}"><a href="/project/create"><i class="icon-signal icon-white"></i> Create Project</a></li>
+              {% endif %}
               <li class="{% active request "^/about$" %}">         <a href="/about">         <i class="icon-info-sign icon-white"></i> About</a></li>
             </ul>
             {% if user.is_anonymous %}
@@ -51,7 +54,7 @@
                 </li>
             </ul>
             {% else %}
-              <p class="navbar-text pull-right">You are logged in as {{user.username}} - <a href="/user/logout">Log out</a></p>
+              <p class="navbar-text pull-right">You are logged in as <a href="/user/edit">{{user.username}}</a> - <a href="/user/logout">Log out</a></p>
             {% endif %}
           </div><!-- /.nav-collapse -->
             

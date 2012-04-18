@@ -1,4 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect
+from projects.middleware import get_manageable_object_or_404
+from projects.views import details_project
 from plots.models import Plot
 from projects.models import Project
 from django.template import RequestContext
@@ -10,6 +12,9 @@ from pylab import figure, axes, pie, title
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 import os
 
+from django.contrib.auth.decorators import login_required
+
+#http://stackoverflow.com/questions/2723842/django-message-framework-and-login-required <--- look into this for messaging user about login requirement
 
 def show(request, plot_id, x_val = 0, y_val = 0):
     plot = get_object_or_404(Plot, pk=plot_id)
@@ -27,8 +32,9 @@ def show(request, plot_id, x_val = 0, y_val = 0):
     canvas.print_png(response)
     return response
 
+@login_required(login_url='/')
 def create(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)
+    project = get_manageable_object_or_404(Project, pk=project_id, user = request.user)
     form = PlotForm(request.POST or None)
     if form.is_valid(): # All validation rules pass
         plot = form.save()
@@ -43,8 +49,9 @@ def create(request, project_id):
                               'errors': form.errors},
                                context_instance=RequestContext(request))
 
+@login_required(login_url='/')
 def edit(request, plot_id):
-    plot = get_object_or_404(Plot, pk=plot_id)
+    plot = get_manageable_object_or_404(Plot, pk=plot_id, user=request.user)
     form = PlotForm(request.POST or None)
     if form.is_valid(): # All validation rules pass
         edited_plot = form.save()
@@ -58,14 +65,13 @@ def edit(request, plot_id):
                               'plot':   plot},
                                context_instance=RequestContext(request))
 
+@login_required(login_url='/')
 def delete(request, plot_id):
-    c = Plot.objects.get(pk=plot_id)
-    project = c.project
-    c.delete()
-    #ugly quick fix, try this instead:
-    #from django.core.urlresolvers import reverse
-    #reverse('products.views.filter_by_led')
-    return redirect("/project/details/"+project.key)
+    plot = get_manageable_object_or_404(Plot, pk=plot_id, user=request.user)
+    project = plot.project
+    plot.delete()
+    
+    return redirect(details_project, project_id=project.key)
 
 def details(request, plot_id):
     plot = get_object_or_404(Plot, pk=plot_id)

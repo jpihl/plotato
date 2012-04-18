@@ -11,11 +11,13 @@ def uuid_str():
 class Project (models.Model):
     key         = models.CharField(primary_key=True, max_length=64, default=uuid_str, editable=False)
     name        = models.CharField(max_length=128, unique = True)
-    users       = ListField(EmbeddedModelField('User'))
+    owner       = models.ForeignKey(User, editable=False, related_name='projects')
     description = models.TextField()
     created     = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):
         return self.name
+    def user_can_manage_me(self, user):
+        return user == self.owner
 
 class Test(models.Model):
     key         = models.CharField(primary_key=True, max_length=64, default=uuid_str, editable=False)
@@ -24,6 +26,12 @@ class Test(models.Model):
     created     = models.DateTimeField(auto_now_add=True)
     slug        = models.SlugField(editable=False, default='')
     project     = models.ForeignKey(Project, editable=False, related_name='tests')
+    def __unicode__(self):
+        return self.name
+
+    def user_can_manage_me(self, user):
+        return user == self.project.owner
+
     def save(self, *args, **kwargs):
         """
         Create a slugified name for browser access.
@@ -36,3 +44,7 @@ class Run(models.Model):
     test        = models.ForeignKey(Test, editable=False, related_name='runs')
     created     = models.DateTimeField(auto_now_add=True)
     data        = DictField()
+    def __unicode__(self):
+        return "Run: " + created
+    def user_can_manage_me(self, user):
+        return user == self.test.project.owner

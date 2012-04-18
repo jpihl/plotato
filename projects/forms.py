@@ -23,15 +23,18 @@ class TestForm(forms.Form):
 
 class UserForm(forms.Form):
     username    = forms.CharField(max_length=128, required=True)
-    password    = forms.CharField(min_length=6, max_length=128, required=True)
     email       = forms.EmailField(required=True)
     first_name  = forms.CharField(max_length=128, required=True)
     last_name   = forms.CharField(max_length=128, required=True)
     def save(form):
         u = User()
         u.username   = form.data.get("username")
-        u.set_password(form.data.get("password"))
         u.email      = form.data.get("email")
         u.first_name = form.data.get("first_name")
         u.last_name  = form.data.get("last_name")
         return u
+
+class PasswordForm(forms.Form):
+    password    = forms.CharField(min_length=6, max_length=128, required=True)
+    def save(form):
+        return form.data.get("password")

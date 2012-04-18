@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not user.is_anonymous%}
+<form class="form-horizontal" action="/user/edit/" method="post">
+{% else %}
+<form class="form-horizontal" action="/user/create/" method="post">
+{% endif %} 
+{% csrf_token %}
+  <fieldset>
+    {% if not user.is_anonymous %}
+      <legend>Edit User</legend>
+    {% else %}
+      <legend>Create New User</legend>
+    {% endif %}
+    {% if errors %}
+      <div class="control-group error">
+    {% else %}
+      <div class="control-group">
+    {% endif %}
+      <label class="control-label" for="id_username">Username:</label>
+      <div class="controls">
+        <input class="input-xlarge" id="id_username" type="text" name="username" value="{{user.username}}"/>
+      </div>
+    </div>
+    {% if errors %}
+      <div class="control-group error">
+    {% else %}
+      <div class="control-group">
+    {% endif %}
+      <label class="control-label" for="id_password">Password:</label>
+      <div class="controls">
+        <input type="password" class="input-xlarge" id="id_password" type="text" name="password" value=""/>
+      </div>
+    </div>
+    {% if errors %}
+      <div class="control-group error">
+    {% else %}
+      <div class="control-group">
+    {% endif %}
+      <label class="control-label" for="id_email">Email:</label>
+      <div class="controls">
+        <input type="email" class="input-xlarge" id="id_email" type="text" name="email" value="{{user.email}}"/>
+      </div>
+    </div>
+    {% if errors %}
+      <div class="control-group error">
+    {% else %}
+      <div class="control-group">
+    {% endif %}
+      <label class="control-label" for="id_first_name">First name:</label>
+      <div class="controls">
+        <input class="input-xlarge" id="id_first_name" type="text" name="first_name" value="{{user.first_name}}"/>
+      </div>
+    </div>
+    {% if errors %}
+      <div class="control-group error">
+    {% else %}
+      <div class="control-group">
+    {% endif %}
+      <label class="control-label" for="id_last_name">Last name:</label>
+      <div class="controls">
+        <input class="input-xlarge" id="id_last_name" type="text" name="last_name" value="{{user.last_name}}"/>
+      </div>
+    </div>
+    <div class="form-actions">
+        {% if not user.is_anonymous %}
+        <a type="submit" class="btn btn-inverse" href="home">
+          Back
+        </a>
+        <button type="submit" value="Submit" class="btn btn-primary">
+          Update
+        </button> 
+        <a class="btn btn-danger" data-toggle="modal" href="#are_you_sure">
+          Delete
+        </a>
+        {% else %}
+        <button type="submit" value="Submit" class="btn btn-primary">
+          Create
+        </button> 
+        {% endif %}
+    </div>
+  </fieldset>
+</form>
+{% if not user.is_anonymous %}
+<div style="display: none;" id="are_you_sure" class="modal hide fade">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>Are You Sure?</h3>
+  </div>
+  <div class="modal-body">
+    <h4>Caution!</h4>
+    <p>If you delete the user, well you delete the user.</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn btn-primary" data-dismiss="modal">Cancel</a>
+    <a href="/user/delete/" class="btn btn-danger">Delete</a>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
