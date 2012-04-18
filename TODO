@@ -15,3 +15,5 @@ Provide users, not logged in, with a login page when trying to access restricted
 Enable cascading when deleting data.
 
 Hide restricted functionality
+
+Improve restriction of user creation 

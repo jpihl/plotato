@@ -45,6 +45,6 @@ class Run(models.Model):
     created     = models.DateTimeField(auto_now_add=True)
     data        = DictField()
     def __unicode__(self):
-        return "Run: " + created
+        return "Run: " + self.created
     def user_can_manage_me(self, user):
         return user == self.test.project.owner

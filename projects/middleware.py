@@ -4,9 +4,8 @@ from django.shortcuts import HttpResponseRedirect, get_object_or_404
 
 class PermissionDeniedToLoginMiddleware(object):
     def process_exception(self, request, exception):
-    	print "HELLO FROM PermissionDeniedToLoginMiddleware"
         if type(exception) == PermissionDenied:
-            messages.add_message(request, messages.ERROR, 'ERROR: Access denied, please login in as authorized user!')
+            messages.add_message(request, messages.ERROR, 'ERROR: Permission denied, please login in as an authorized user!')
             return HttpResponseRedirect('/')
         return None
 

@@ -7,9 +7,10 @@ from django.template import RequestContext
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
 
 def home(request):
-    return render_to_response('index.html', {'project_list':  Project.objects.all().order_by('name'), 'login_error': "lol"}, context_instance=RequestContext(request))
+    return render_to_response('index.html', {'project_list':  Project.objects.all().order_by('name')}, context_instance=RequestContext(request))
 
 def about(request):
     return render_to_response('about.html', {}, context_instance=RequestContext(request))
@@ -104,9 +105,9 @@ def edit_test(request, test_id):
 
 @login_required(login_url='/')
 def delete_test(request, test_id):
-    t = get_manageable_object_or_404(Test, pk=test_id, user = request.user)
-    project = t.project
-    t.delete()
+    test = get_manageable_object_or_404(Test, pk=test_id, user = request.user)
+    project = test.project
+    test.delete()
 
     messages.add_message(request, messages.WARNING, 'Test "{0}" deleted'.format(t.name))
     return redirect(details_project, project_id = project.key)
@@ -128,6 +129,10 @@ def create_user(request):
     userform = UserForm(request.POST or None)
     passform = PasswordForm(request.POST or None)
     if userform.is_valid() and passform.is_valid: # All validation rules pass
+        if request.POST["user_create_code"] != settings.USER_CREATE_CODE:
+            messages.add_message(request, messages.ERROR, 'The provided user create code was invalid.')
+            return redirect(home)
+
         user = userform.save()
         user.set_password(passform.save())
         user.save()

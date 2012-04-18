@@ -174,3 +174,5 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-block alert-warning',
     messages.ERROR: 'alert-block alert-error'
 }
+
+USER_CREATE_CODE = 'secretpassword'

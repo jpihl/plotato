@@ -40,10 +40,7 @@ def create(request, project_id):
         plot = form.save()
         plot.project = project
         plot.save()
-        #ugly quick fix, try this instead:
-        #from django.core.urlresolvers import reverse
-        #reverse('products.views.filter_by_led')
-        return redirect("/project/details/"+project.key)
+        return redirect(details_project, project_id=project.key)
     return render_to_response('plot_constructor.html',
                              {'project': project,
                               'errors': form.errors},

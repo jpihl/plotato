@@ -64,6 +64,18 @@
         <input class="input-xlarge" id="id_last_name" type="text" name="last_name" value="{{user.last_name}}"/>
       </div>
     </div>
+    {% if user.is_anonymous %}
+    {% if errors %}
+      <div class="control-group error">
+    {% else %}
+      <div class="control-group">
+    {% endif %}
+      <label class="control-label" for="id_create_code">User Create Code:</label>
+      <div class="controls">
+        <input class="input-xlarge" id="id_create_code" type="text" name="user_create_code"/>
+      </div>
+    </div>
+    {% endif %}
     <div class="form-actions">
         {% if not user.is_anonymous %}
         <a type="submit" class="btn btn-inverse" href="home">
