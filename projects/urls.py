@@ -1,10 +1,9 @@
 from django.conf.urls.defaults import patterns, url, include
 from tastypie.api import Api
-from projects.api import UserResource, ProjectResource, TestResource, RunResource
+from projects.api import ProjectResource, TestResource, RunResource
 
 rest_api = Api(api_name='v1')
 rest_api.register(TestResource())
-rest_api.register(UserResource())
 rest_api.register(ProjectResource())
 rest_api.register(RunResource())
 

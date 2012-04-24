@@ -14,31 +14,36 @@
             </div>
             <div class="row">
                 <div class="span3">
-                    <div class="well">
-                    <ul class="nav nav-list">
-                    <li class="nav-header">
-                        Actions
-                    </li>
                     
-                    <!--<li class="active">-->
-                    <li>
-                    <a href="/project/edit/{{project.key}}">Edit This Project</a>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Add <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="/plot/create/{{project.key}}">New Plot</a>
-                            </li>
-                            <li>
-                                <a href="/test/create/{{project.key}}">New Test</a>
-                            </li>
+                    <div class="well">
+                        <ul class="nav nav-list">
+                        <li class="nav-header">
+                            Actions
+                        </li>
+                        {% if project.owner == user %}
+                        <li>
+                        <a href="/project/edit/{{project.key}}">Edit This Project</a>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Add <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/plot/create/{{project.key}}">New Plot</a>
+                                </li>
+                                <li>
+                                    <a href="/test/create/{{project.key}}">New Test</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        <li>
+                        <a href="/">Back to Overview</a>
+                        </li>
                         </ul>
-                    </li>
-                    </ul>
                     </div>
+                    
                     <h4> Project Owner </h4>
                     <p>
                     {{ project.owner.get_full_name }}

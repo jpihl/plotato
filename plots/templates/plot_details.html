@@ -23,9 +23,11 @@ onload="prettyPrint()"
                     <li class="nav-header">
                         Actions
                     </li>
+                    {% if plot.project.owner == user %}
                     <li>
                     <a href="/plot/edit/{{plot.key}}">Edit This Plot</a>
                     </li>
+                    {% endif %}
                     <li>
                     <a href="/project/details/{{plot.project.key}}">Back to Project</a>
                     </li>

@@ -39,15 +39,19 @@ from tastypie_nonrel.resources import ModelResource
 from tastypie_nonrel import fields
 
 from tastypie.models import create_api_key
-from tastypie.authorization import Authorization
+from tastypie.authorization import DjangoAuthorization, Authorization
+from tastypie.authentication import Authentication
 from projects.models import (Project, Test, Run)
 
 
+#Authentication answers the question “can they see this data?” 
+#Authorization answers the question “what objects can they modify?” 
+
 models.signals.post_save.connect(create_api_key, sender=User)
 
-
+"""
 class UserResource(ModelResource):
-    """Resource for Django User()"""
+    #Resource for Django User()
     class Meta:
         queryset = User.objects.filter(is_active=True)
         resource_name = 'user'
@@ -55,31 +59,35 @@ class UserResource(ModelResource):
         allowed_methods = ['get']
         excludes = ['email', 'password', 'is_superuser']
         authorization = Authorization()
-
+"""
 
 class ProjectResource(ModelResource):
-    """Resource for Project()"""
+    #Resource for Project()
 
     class Meta:
         queryset = Project.objects.all()
-        authorization = Authorization()
+        authentication = Authentication()
 
+    #def apply_authorization_limits(self, request, object_list):
+    #    return object_list.filter(owner=request.user)
 
 class TestResource(ModelResource):
-    """Resource for Test()"""
+    #Resource for Test()
 
     project = fields.ToOneField(ProjectResource, 'project')
 
     class Meta:
         queryset = Test.objects.all()
-        authorization = Authorization()
+        authentication = Authentication()
+    #def apply_authorization_limits(self, request, object_list):
+    #    return object_list.filter(project__owner=request.user)
 
 
 class RunResource(ModelResource):
-    """Resource for Run()"""
+    #Resource for Run()
 
     test = fields.ToOneField(TestResource, 'test')
 
     class Meta:
         queryset = Run.objects.all()
-        authorization = Authorization()
+        authentication = Authentication()

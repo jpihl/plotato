@@ -19,9 +19,11 @@
                     <li class="nav-header">
                         Actions
                     </li>
+                    {% if test.project.owner == user %}
                     <li>
                     <a href="/test/edit/{{test.key}}">Edit This Test</a>
                     </li>
+                    {% endif %}
                     <li>
                     <a href="/project/details/{{test.project.key}}">Back to Project</a>
                     </li>
