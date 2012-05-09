@@ -1,40 +1,47 @@
 from django import forms
+from django.core import validators
 from models import Project, Test
 from django.contrib.auth.models import User
-from django.core.validators import validate_email
+from django.contrib.auth.forms import UserCreationForm
+from django.conf import settings
 
-class ProjectForm(forms.Form):
-    name        = forms.CharField(max_length=128, required=True)
-    description = forms.CharField(required=True)
-    def save(form):
-        p = Project()
-        p.name = form.data.get("name")
-        p.description = form.data.get("description")
-        return p
+class ProjectForm(forms.ModelForm):
+  class Meta:
+    model  = Project
+    fields = ('name', 'description')
+    exclude=('owner',)
+  def getKind(self):
+    return "Project"
 
-class TestForm(forms.Form):
-    name        = forms.CharField(max_length=128, required=True)
-    description = forms.CharField(required=True)
-    def save(form):
-        t = Test()
-        t.name = form.data.get("name")
-        t.description = form.data.get("description")
-        return t
+class TestForm(forms.ModelForm):
+  class Meta:
+    model = Test
+    fields = ('name', 'description')
+    exclude=('project',)
+  def getKind(self):
+    return "Test"
 
-class UserForm(forms.Form):
-    username    = forms.CharField(max_length=128, required=True)
-    email       = forms.EmailField(required=True)
-    first_name  = forms.CharField(max_length=128, required=True)
-    last_name   = forms.CharField(max_length=128, required=True)
-    def save(form):
-        u = User()
-        u.username   = form.data.get("username")
-        u.email      = form.data.get("email")
-        u.first_name = form.data.get("first_name")
-        u.last_name  = form.data.get("last_name")
-        return u
+class UserForm(UserCreationForm):
+  create_user_code = forms.CharField()
 
-class PasswordForm(forms.Form):
-    password    = forms.CharField(min_length=6, max_length=128, required=True)
-    def save(form):
-        return form.data.get("password")
+  def getKind(self):
+    return "User"
+
+  class Meta:
+    model = User
+    fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+  
+  def clean(self):
+    super(UserForm, self).clean()
+
+    if self.cleaned_data.get('create_user_code') != settings.CREATE_USER_CODE and not self.Meta.model:
+      raise ValidationError('The create user code was invalid.')
+    return self.cleaned_data
+
+class UserEditForm(forms.ModelForm):
+  def getKind(self):
+    return "User"
+
+  class Meta:
+    model = User
+    fields = ('first_name', 'last_name', 'email')

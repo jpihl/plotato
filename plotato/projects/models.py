@@ -4,13 +4,14 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from fields import PickledObjectField
 import uuid
+from django.contrib.auth.models import User
 
 def uuid_str():
     return str(uuid.uuid1())
 
 class Project (models.Model):
     key         = models.CharField(primary_key=True, max_length=64, default=uuid_str, editable=False)
-    name        = models.CharField(max_length=128, unique = True)
+    name        = models.CharField(max_length=128, unique=True)
     owner       = models.ForeignKey(User, editable=False, related_name='projects')
     description = models.TextField()
     created     = models.DateTimeField(auto_now_add=True)
