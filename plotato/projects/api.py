@@ -35,13 +35,13 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from tastypie_nonrel.resources import ModelResource
-from tastypie_nonrel import fields
+from tastypie.resources import ModelResource
+from tastypie import fields
 
 from tastypie.models import create_api_key
 from tastypie.authorization import DjangoAuthorization, Authorization
 from tastypie.authentication import Authentication
-from projects.models import (Project, Test, Run)
+from models import Project, Test, Run
 
 
 #Authentication answers the question “can they see this data?” 

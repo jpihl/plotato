@@ -1,8 +1,8 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-from djangotoolbox.fields import EmbeddedModelField, ListField, DictField
 from django.db.models.signals import post_save
+from fields import PickledObjectField
 import uuid
 
 def uuid_str():
@@ -43,7 +43,7 @@ class Run(models.Model):
     key         = models.CharField(primary_key=True, max_length=64, default=uuid_str, editable=False)
     test        = models.ForeignKey(Test, editable=False, related_name='runs')
     created     = models.DateTimeField(auto_now_add=True)
-    data        = DictField()
+    data        = PickledObjectField()
     def __unicode__(self):
         return "Run: " + self.created
     def user_can_manage_me(self, user):

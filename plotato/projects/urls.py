@@ -1,13 +1,13 @@
 from django.conf.urls.defaults import patterns, url, include
 from tastypie.api import Api
-from projects.api import ProjectResource, TestResource, RunResource
+from api import ProjectResource, TestResource, RunResource
 
 rest_api = Api(api_name='v1')
 rest_api.register(TestResource())
 rest_api.register(ProjectResource())
 rest_api.register(RunResource())
 
-urlpatterns = patterns('projects',
+urlpatterns = patterns('plotato.projects',
 	url(r'^$',                                                                                            'views.home'),
     url(r'^about$',                                                                                       'views.about'),
 

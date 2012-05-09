@@ -1,5 +1,5 @@
 # Plotato Django Project #
-Plotato is a django 1.4 web application for presenting customizable plots.
+Plotato is a django 1.4 web application for storing data and presenting it with customizable plots.
 
 ## Prerequisites ##
 
@@ -34,6 +34,8 @@ git clone git@github.com:jpihl/plotato.git plotato
 ### Install requirements ###
 ```bash
 cd plotato
+pip install numpy
+pip install matplotlib
 pip install -r requirements.txt
 ```
 

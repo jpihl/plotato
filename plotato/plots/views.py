@@ -1,10 +1,10 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect
-from projects.middleware import get_manageable_object_or_404
-from projects.views import details_project
-from plots.models import Plot
-from projects.models import Project
+from plotato.projects.middleware import get_manageable_object_or_404
+from plotato.projects.views import details_project
+from models import Plot
+from plotato.projects.models import Project
 from django.template import RequestContext
-from plots.forms import PlotForm
+from forms import PlotForm
 from django.http import HttpResponse
 
 import matplotlib.pyplot
