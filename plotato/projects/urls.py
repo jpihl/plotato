@@ -18,7 +18,7 @@ urlpatterns = patterns('plotato.projects',
     url(r'^user/details/$',                                                                               'views.details_user'),
     url(r'^user/delete/$',                                                                                'views.delete_user'),
 
-    url(r'^project/create$',                                                                              'views.create_project'),
+    url(r'^project/create/$',                                                                              'views.create_project'),
     url(r'^project/edit/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',   'views.edit_project'),
     url(r'^project/details/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$','views.details_project'),
     url(r'^project/delete/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$', 'views.delete_project'),
