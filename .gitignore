@@ -51,3 +51,4 @@ atlassian-ide-plugin.xml
 
 # SQLite
 *.db
+*.sqlite
