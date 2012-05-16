@@ -46,8 +46,8 @@
                                   <tr>
                                     <th>Run</th>
                                     <th>Date</th>
-                                    {% for key in test.runs.get_query_set.0.data.keys %}
-                                    <th>{{key}}</th>
+                                    {% for item in test.runs.get_query_set.0.data %}
+                                    <th>Item {{forloop.counter}}</th>
                                     {% endfor %}
                                     <th>Actions</th>
                                   </tr>
@@ -57,26 +57,15 @@
                                         <tr>
                                             <td>{{forloop.counter}}</td>
                                             <td>{{run.created}}</td>
-                                            {% for value in run.data.values%}
+                                            {% for value in run.data%}
                                                 <td>{{value}}</td>
                                             {%endfor%}
                                             <td><a class="btn btn-small btn-danger" href="/run/delete/{{run.key}}">Delete</a></td>
                                         </tr>
                                     {%endfor%}
                                 </tbody>
-                              </table>
-                            </div>
-                        <!--
-                        {% for run in test.runs.all %}
-                        <div class="span3">
-                            <h3>{{ run.created }}</h3>
-                            
-                                <p>{{key}}</p>
-                            {% endfor %}
-                            <p><a href="/run/delete/{{run.key}}" class="btn btn-danger">Delete</a></p>
+                            </table>
                         </div>
-                        
-                    -->
                     </div>
                     {% endif %}
                 </div>
