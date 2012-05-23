@@ -147,8 +147,11 @@ def create_user(request):
     form = UserForm(request.POST or None)
     if form.is_valid(): # owner has been excluded. No more error.
         new_user = form.save()
-        #login(request, user)
-        messages.add_message(request, messages.SUCCESS, 'The user has been successfully created.')
+        messages.add_message(request, messages.SUCCESS, "Thanks for registering. You are now logged in.")
+        new_user = authenticate(username=request.POST['username'],
+                                password=request.POST['password1'])
+        login(request, new_user)
+        
         return redirect(home)
     return render_to_response('form.html',
                               {'form': form},

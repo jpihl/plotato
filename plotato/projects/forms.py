@@ -33,7 +33,7 @@ class UserForm(UserCreationForm):
   
   def clean(self):
     super(UserForm, self).clean()
-
+    # TODO: This does not work. "not self.Meta.model" returns true for a not-yet created user.
     if self.cleaned_data.get('create_user_code') != settings.CREATE_USER_CODE and not self.Meta.model:
       raise ValidationError('The create user code was invalid.')
     return self.cleaned_data
