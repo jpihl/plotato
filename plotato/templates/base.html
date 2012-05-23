@@ -30,28 +30,36 @@
           <a class="brand" href="/">plotato</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="{% active request "^/$" %}">              <a href="/">              <i class="icon-home icon-white"></i> Home</a>      </li>
+              <li class="{% active request "^/$" %}">              <a href="/">              <i class="icon-home icon-white"></i>     Home</a>      </li>
               {% if user.is_anonymous %}
-              <li class="{% active request "^/user/create/$" %}">  <a href="/user/create/">  <i class="icon-user icon-white"></i> Create User</a></li>
+              <li class="{% active request "^/user/create/$" %}">  <a href="/user/create/">  <i class="icon-user icon-white"></i>     Create User</a></li>
               {% else %}
-              <li class="{% active request "^/project/create$" %}"><a href="/project/create"><i class="icon-signal icon-white"></i> Create Project</a></li>
+              <li class="{% active request "^/project/create$" %}"><a href="/project/create"><i class="icon-signal icon-white"></i>   Create Project</a></li>
               {% endif %}
-              <li class="{% active request "^/about$" %}">         <a href="/about">         <i class="icon-info-sign icon-white"></i> About</a></li>
+              <li class="{% active request "^/about$" %}">         <a href="/about">         <i class="icon-info-sign icon-white"></i>About</a></li>
             </ul>
+
+            
             {% if user.is_anonymous %}
+
+            <!-- The drop down menu -->
             <ul class="nav pull-right">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</b></a>
-                  <ul class="dropdown-menu">
-                    <form class="well" action="/user/login" method="post">
+              <li><a href="/user/create">Sign Up</a></li>
+              <li class="divider-vertical"></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+                <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                  <form action="/user/login" method="post">
                       {% csrf_token %}
-                      <legend>Login:</legend>
-                      <input id="id_username" name="username" type="text" class="span3" placeholder="Username…">
-                      <input id="id_password" name="password" type="password" class="span3" placeholder="Password…">
-                      <button type="submit" class="btn btn-small">Submit</button>
+                      <input id="id_username" style="margin-bottom: 15px;" type="text" name="username" size="30" placeholder="Username…" />
+                      <input id="id_password" style="margin-bottom: 15px;" type="password" name="password" size="30" placeholder="Password…"/>
+                      <input id="id_remember_me" style="float: left; margin-right: 10px;" type="checkbox" name="remember_me" value="1" />
+                      <label class="string optional" for="user_remember_me"> Remember me</label>
+                     
+                      <input class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;" type="submit" name="commit" value="Sign In" />
                     </form>
-                  </ul>
-                </li>
+                </div>
+              </li>
             </ul>
             {% else %}
               <p class="navbar-text pull-right">You are logged in as <a href="/user/edit">{{user.username}}</a> - <a href="/user/logout">Log out</a></p>
@@ -62,6 +70,13 @@
       </div><!-- /.navbar-inner -->
     </div><!-- /.navbar -->
     <div class="container">
+      <noscript>
+        <div class="alert alert-error fade in">
+          <a class="close" data-dismiss="alert" href="#">×</a>
+          <h4 class="alert-heading">Message:</h4>
+          <p>To enjoy all the features of this site, please enbale javascript</p>
+        </div>
+      </noscript> 
       {% if messages %}
         {% for message in messages %}
           <div class="alert {%if message.tags %}{{ message.tags }}{%endif%} fade in">
@@ -79,11 +94,19 @@
     {% block scripts %}{% endblock %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    
+
     <script>
-      $('.dropdown-menu').find('form').click(function (e) {
-        e.stopPropagation();
+      $(function() {
+        // Setup drop down menu
+        $('.dropdown-toggle').dropdown();
+        // Fix input element click problem
+        
+        $('.dropdown input, .dropdown label').click(function(e) {
+          e.stopPropagation();
+        });
       });
-    </script>
+      </script>
   </body>
 </html>
 

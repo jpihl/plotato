@@ -182,6 +182,8 @@ def log_in(request):
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
+            if not request.POST.get('remember_me', None):
+                request.session.set_expiry(0)
             login(request, user)
             return redirect(home)
         else:
