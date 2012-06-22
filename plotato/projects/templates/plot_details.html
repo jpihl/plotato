@@ -17,27 +17,27 @@ onload="prettyPrint()"
                 <h1>{{ plot.name }}<small> details</small></h1>
             </div>
             <div class="row">
-                <div class="span2">
+                <div class="span3">
                     <div class="well">
-                    <ul class="nav nav-list">
-                    <li class="nav-header">
-                        Actions
-                    </li>
-                    {% if plot.project.owner == user %}
-                    <li>
-                    <a href="/plot/edit/{{plot.key}}">Edit This Plot</a>
-                    </li>
-                    {% endif %}
-                    <li>
-                    <a href="/project/details/{{plot.project.key}}">Back to Project</a>
-                    </li>
+                        <ul class="nav nav-list">
+                        <li class="nav-header">
+                            Actions
+                        </li>
+                        {% if request.session.is_authorized %}
+                        <li>
+                            <a href="/plot/edit/{{plot.key}}">Edit This Plot</a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a href="/project/details/{{plot.project.key}}">Back to Project</a>
+                        </li>
                     </div>
                     <h4> Plot Description </h4>
                     <p>
                     {{ plot.description }}
                     </p>
                 </div>
-                <div class="span10">
+                <div class="span6">
                     <div class="span5">
                         <div class="page-header">
                             <h2>The Plot</h2>
@@ -50,14 +50,13 @@ onload="prettyPrint()"
                             </li>
                         </ul>
                     </div>
-                    <div class="span4">
-                        <div class="page-header">
-                            <h2>The Code</h2>
-                        </div>
-                            <pre class="prettyprint linenums" style="margin-bottom: 9px;">{% for c in plot.code.splitlines%}{{c}}
-{% endfor %}</pre>
-                        
+                </div>
+                <div class="span3">
+                    <div class="page-header">
+                        <h2>The Code</h2>
                     </div>
+                        <pre class="prettyprint linenums" style="margin-bottom: 9px;">{% for c in plot.code.splitlines%}{{c}}
+{% endfor %}</pre>
                 </div>
             </div>
         </div>

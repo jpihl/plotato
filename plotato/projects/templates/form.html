@@ -11,14 +11,14 @@
 </div>
 {% endif %}
 
-{% if form.instance.name %}
+{% if form.instance.created %}
 <form class="form-horizontal" action="/{{form.getKind|lower}}/edit/{{ form.instance.key }}" method="post">
 {% else %}
 <form class="form-horizontal" action="/{{form.getKind|lower}}/create/{{project.key}}" method="post">
 {% endif %} 
   <fieldset>
     {% csrf_token %}
-  {% if form.instance.name  %}
+  {% if form.instance.created  %}
     <legend>Edit 
   {% else %}
     <legend>Create New
@@ -61,7 +61,7 @@
     {% endfor %}
   </fieldset>
   <div class="form-actions">
-    {% if form.instance.name %}
+    {% if form.instance.created %}
     <a type="submit" class="btn btn-inverse" href="/{{form.getKind|lower}}/details/{{form.instance.key}}">
       Back
     </a>
@@ -79,7 +79,7 @@
   </div>
 </form>
 
-{% if form.instance.name %}
+{% if form.instance.created %}
 <div style="display: none;" id="are_you_sure" class="modal hide fade">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>

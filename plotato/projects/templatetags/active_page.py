@@ -1,4 +1,5 @@
 from django import template
+from plotato.projects.middleware import is_authorized
 
 register = template.Library()
 

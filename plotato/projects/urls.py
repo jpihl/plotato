@@ -8,26 +8,31 @@ rest_api.register(ProjectResource())
 rest_api.register(RunResource())
 
 urlpatterns = patterns('plotato.projects',
-	url(r'^$',                                                                                            'views.home'),
-    url(r'^about$',                                                                                       'views.about'),
+	url(r'^$',                                                                                                          'views.home'),
+    url(r'^about/$',                                                                                                     'views.about'),
 
-    url(r'^user/login$',                                                                                  'views.log_in'),
-    url(r'^user/logout$',                                                                                 'views.log_out'),
-    url(r'^user/create/$',                                                                                'views.create_user'),
-    url(r'^user/edit/$',                                                                                  'views.edit_user'),
-    url(r'^user/details/$',                                                                               'views.details_user'),
-    url(r'^user/delete/$',                                                                                'views.delete_user'),
+    url(r'^login$',                                                                                                     'views.log_in'),
+    url(r'^logout$',                                                                                                    'views.log_out'),
 
-    url(r'^project/create/$',                                                                              'views.create_project'),
-    url(r'^project/edit/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',   'views.edit_project'),
-    url(r'^project/details/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$','views.details_project'),
-    url(r'^project/delete/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$', 'views.delete_project'),
+    url(r'^project/create/$',                                                                                           'views.create_project'),
+    url(r'^project/edit/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                 'views.edit_project'),
+    url(r'^project/details/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',              'views.details_project'),
+    url(r'^project/delete/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',               'views.delete_project'),
 
-    url(r'^test/create/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',    'views.create_test'),
-    url(r'^test/edit/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',         'views.edit_test'),
-    url(r'^test/details/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',      'views.details_test'),
-    url(r'^test/delete/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',       'views.delete_test'),
-    url(r'^run/delete/(?P<run_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',         'views.delete_run'),
+    url(r'^test/create/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                  'views.create_test'),
+    url(r'^test/edit/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                       'views.edit_test'),
+    url(r'^test/details/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                    'views.details_test'),
+    url(r'^test/delete/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                     'views.delete_test'),
+    url(r'^test/delete/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                     'views.delete_test'),
+    url(r'^run/delete/(?P<run_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                       'views.delete_run'),
+
+    url(r'^plot/(?P<plot_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/$',                                'views.show_plot'),
+    url(r'^plot/(?P<plot_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/(?P<x_val>\d+)x(?P<y_val>\d+)/$',  'views.show_plot'),
+    url(r'^plot/create/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                       'views.create_plot'),
+    url(r'^plot/edit/(?P<plot_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                            'views.edit_plot'),
+    url(r'^plot/delete/(?P<plot_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                          'views.delete_plot'),
+    url(r'^plot/details/(?P<plot_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                         'views.details_plot')
+
 )
 
 urlpatterns += patterns('',

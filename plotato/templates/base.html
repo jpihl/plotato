@@ -16,7 +16,7 @@
     {% block extra_head %}{% endblock %}
   </head>
   
-  {% load active_page %}
+  {% load plotato_utils %}
 
   <body {% block body_tag %}{%endblock%}>
     <div class="navbar navbar-fixed-top">
@@ -30,28 +30,27 @@
           <a class="brand" href="/">plotato</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="{% active request "^/$" %}">              <a href="/">              <i class="icon-home icon-white"></i>     Home</a>      </li>
-              {% if not user.is_anonymous %}
-              <li class="{% active request "^/project/create$" %}"><a href="/project/create"><i class="icon-signal icon-white"></i>   Create Project</a></li>
+              <li class="{% active request "^/$" %}">              <a href="/">              <i class="icon-home icon-white">     </i> Home</a></li>
+              {% if request.session.is_authorized %}
+              <li class="{% active request "^/project/create/$" %}"><a href="/project/create/"><i class="icon-signal icon-white">   </i> Create Project</a></li>
               {% endif %}
-              <li class="{% active request "^/about$" %}">         <a href="/about">         <i class="icon-info-sign icon-white"></i>About</a></li>
+              <li class="{% active request "^/about/$" %}">         <a href="/about/">         <i class="icon-info-sign icon-white"></i> About</a></li>
             </ul>
 
-            {% if user.is_anonymous %}
+            {% if not request.session.is_authorized %}
 
             <!-- The drop down menu -->
             <ul class="nav pull-right">
-              <li><a href="/user/create">Sign Up</a></li>
-              <li class="divider-vertical"></li>
               <li class="dropdown">
-                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Administrator <strong class="caret"></strong></a>
                 <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                  <form action="/user/login" method="post">
+                  <form action="/login" method="post">
                       {% csrf_token %}
-                      <input id="id_username" style="margin-bottom: 15px;" type="text" name="username" size="30" placeholder="Username…" />
+                      <label class="string optional" for="id_password"> Password</label>
                       <input id="id_password" style="margin-bottom: 15px;" type="password" name="password" size="30" placeholder="Password…"/>
+                      
                       <input id="id_remember_me" style="float: left; margin-right: 10px;" type="checkbox" name="remember_me" value="1" />
-                      <label class="string optional" for="user_remember_me"> Remember me</label>
+                      <label class="string optional" for="id_remember_me"> Remember me</label>
                      
                       <input class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;" type="submit" name="commit" value="Sign In" />
                     </form>
@@ -59,7 +58,7 @@
               </li>
             </ul>
             {% else %}
-              <p class="navbar-text pull-right">You are logged in as <a href="/user/edit">{{user.username}}</a> - <a href="/user/logout">Log out</a></p>
+              <p class="navbar-text pull-right">You are signed in as administrator</a> - <a href="/logout">Log out</a></p>
             {% endif %}
           </div><!-- /.nav-collapse -->
             
@@ -71,7 +70,7 @@
         <div class="alert alert-error fade in">
           <a class="close" data-dismiss="alert" href="#">×</a>
           <h4 class="alert-heading">Message:</h4>
-          <p>To enjoy all the features of this site, please enbale javascript</p>
+          <p>To enjoy all the features of this site, please enable javascript</p>
         </div>
       </noscript> 
       {% if messages %}

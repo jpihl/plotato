@@ -6,11 +6,6 @@
         <div class="span12">
             <div class="page-header">
                 <h1>{{ project.name }}<small> details</small></h1>
-                    <br>
-                    Project Key: 
-                    <span class="label label-info">
-                        {{ project.key }}
-                    </span>
             </div>
             <div class="row">
                 <div class="span3">
@@ -20,7 +15,7 @@
                         <li class="nav-header">
                             Actions
                         </li>
-                        {% if project.owner == user %}
+                        {% if request.session.is_authorized %}
                         <li>
                         <a href="/project/edit/{{project.key}}">Edit This Project</a>
                         </li>
@@ -43,10 +38,11 @@
                         </li>
                         </ul>
                     </div>
-                    
-                    <h4> Project Owner </h4>
+                    <h4>Project Key</h4>
                     <p>
-                    {{ project.owner.get_full_name }}
+                    <span class="label label-info">
+                        {{ project.key }}
+                    </span>
                     </p>
                     <h4> Project Description </h4>
                     <p>

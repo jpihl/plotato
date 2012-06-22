@@ -6,11 +6,6 @@
         <div class="span12">
             <div class="page-header">
                 <h1>{{ test.name }}<small> details</small></h1>
-                <br>
-                    Test Key: 
-                    <span class="label label-info">
-                        {{ test.key }}
-                    </span>
             </div>
             <div class="row">
                 <div class="span3">
@@ -19,7 +14,7 @@
                     <li class="nav-header">
                         Actions
                     </li>
-                    {% if test.project.owner == user %}
+                    {% if request.session.is_authorized %}
                     <li>
                     <a href="/test/edit/{{test.key}}">Edit This Test</a>
                     </li>
@@ -27,7 +22,14 @@
                     <li>
                     <a href="/project/details/{{test.project.key}}">Back to Project</a>
                     </li>
+
                     </div>
+                    <h4>Test Key</h4>
+                    <p>
+                    <span class="label label-info">
+                        {{ test.key }}
+                    </span>
+                    </p>
                     <h4>Test Description</h4>
                     <p>
                     {{ test.description }}
@@ -47,7 +49,7 @@
                                     <th>Run</th>
                                     <th>Date</th>
                                     <th>Data</th>
-                                    {% if test.project.owner == user %}
+                                    {% if request.session.is_authorized %}
                                     <th>Actions</th>
                                     {% endif %}
                                   </tr>
@@ -58,7 +60,7 @@
                                             <td>{{forloop.counter}}</td>
                                             <td>{{run.created}}</td>
                                             <td>{{run.data}}</td>
-                                            {% if test.project.owner == user %}
+                                            {% if request.session.is_authorized %}
                                             <td><a class="btn btn-small btn-danger" href="/run/delete/{{run.key}}">Delete</a></td>
                                             {% endif %}
                                         </tr>

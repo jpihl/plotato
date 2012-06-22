@@ -15,7 +15,7 @@ DATABASES = {
     }
 }
 # This is required for creating users on the webpage.
-USER_CREATE_CODE = ''
+ADMIN_PASSWORD = ''
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ''

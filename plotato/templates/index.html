@@ -7,10 +7,8 @@
     This web appliction is designed to present the results using user designed plots. The plots are generated using mathplot lib. This site also provides a RESTapi which can be used for uploading results.
   </p>
   <p>
-    {% if not user.is_anonymous %}
+    {% if request.session.is_authorized %}
     <a class="btn btn-primary btn-large" href="/project/create">Create New Project &raquo;</a>
-    {% else %}
-    <a class="btn btn-primary btn-large" href="/user/create">Create New User &raquo;</a>
     {% endif %}
   </p>
 </div>
