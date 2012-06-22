@@ -46,7 +46,7 @@ def add_test():
 def add_run():
     print "Adding Run..."
     #settings:
-    test_key      = "bc9a0eac-bca8-11e1-9721-001f29a3c04e"
+    test_key      = "7c68be74-bcb6-11e1-8459-001f29a3c04e"
     test          = "/api/v1/test/" + test_key + "/"
     
     data          = [{"revison": 42, "value": "Very Pink!", "List of Death": [1,2,3,4,5]}]

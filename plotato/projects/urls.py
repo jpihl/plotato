@@ -23,7 +23,7 @@ urlpatterns = patterns('plotato.projects',
     url(r'^test/edit/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                       'views.edit_test'),
     url(r'^test/details/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                    'views.details_test'),
     url(r'^test/delete/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                     'views.delete_test'),
-    url(r'^test/delete/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                     'views.delete_test'),
+    url(r'^run/deleteall/(?P<test_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                   'views.delete_runs'),
     url(r'^run/delete/(?P<run_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                       'views.delete_run'),
 
     url(r'^plot/(?P<plot_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/$',                                'views.show_plot'),

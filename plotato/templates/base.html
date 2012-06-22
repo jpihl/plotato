@@ -30,11 +30,11 @@
           <a class="brand" href="/">plotato</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="{% active request "^/$" %}">              <a href="/">              <i class="icon-home icon-white">     </i> Home</a></li>
+              <li class="{% active request "^/$" %}">              <a href="/">              <i class="icon-home icon">     </i> Home</a></li>
               {% if request.session.is_authorized %}
-              <li class="{% active request "^/project/create/$" %}"><a href="/project/create/"><i class="icon-signal icon-white">   </i> Create Project</a></li>
+              <li class="{% active request "^/project/create/$" %}"><a href="/project/create/"><i class="icon-signal icon">   </i> Create Project</a></li>
               {% endif %}
-              <li class="{% active request "^/about/$" %}">         <a href="/about/">         <i class="icon-info-sign icon-white"></i> About</a></li>
+              <li class="{% active request "^/about/$" %}">         <a href="/about/">         <i class="icon-info-sign icon"></i> About</a></li>
             </ul>
 
             {% if not request.session.is_authorized %}
@@ -65,6 +65,9 @@
         </div><!-- /.container -->
       </div><!-- /.navbar-inner -->
     </div><!-- /.navbar -->
+
+    <br>
+
     <div class="container">
       <noscript>
         <div class="alert alert-error fade in">
@@ -83,6 +86,13 @@
         {% endfor %}
       {% endif %}
       {% block content %} {% endblock %}
+    </div>
+
+    <hr>
+    <div class="container">
+      <footer>
+        <!--<p> © Your Company 2012</p>-->
+      </footer>
     </div>
 
     <!-- ================================================== -->

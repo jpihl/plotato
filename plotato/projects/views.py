@@ -63,7 +63,7 @@ def delete_project(request, project_id):
     p = get_object_or_404(Project, pk=project_id)
     p.delete()
 
-    messages.add_message(request, messages.WARNING, 'Project "{0}" was deleted'.format(p.name))
+    messages.add_message(request, messages.WARNING, 'Project "{0}" was deleted.'.format(p.name))
     return redirect(home)
 
 
@@ -119,7 +119,7 @@ def delete_test(request, test_id):
     project = test.project
     test.delete()
 
-    messages.add_message(request, messages.WARNING, 'Test "{0}" deleted'.format(test.name))
+    messages.add_message(request, messages.WARNING, 'Test "{0}" deleted.'.format(test.name))
     return redirect(details_project, project_id = project.key)
 
 """
@@ -134,12 +134,10 @@ def delete_run(request, run_id):
 
 @admin_only
 def delete_runs(request, test_id):
-    if not is_authorized(request):
-        messages.add_message(request, messages.ERROR, 'ERROR: Unauthorized, please login.')
-        return HttpResponseReload(request)
-
     test = get_object_or_404(Test, pk=test_id)
-    for run in test.runs:
+    runs = test.runs.all()
+    messages.add_message(request, messages.WARNING, '{0} run(s) deleted.'.format(len(runs)))
+    for run in test.runs.all():
         run.delete()
 
     return redirect(details_test, test_id = test.key)
