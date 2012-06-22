@@ -2,5 +2,4 @@ Provide better tools e.g. well documented python functions for insertion and ext
 
 Cache the plots and provide the user with a refresh button.
 
-Use one of these nice themes
-http://builtwithbootstrap.com/
+Fix the threading error happening when plotting
