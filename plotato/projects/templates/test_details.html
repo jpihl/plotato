@@ -46,10 +46,10 @@
                                   <tr>
                                     <th>Run</th>
                                     <th>Date</th>
-                                    {% for item in test.runs.get_query_set.0.data %}
-                                    <th>Item {{forloop.counter}}</th>
-                                    {% endfor %}
+                                    <th>Data</th>
+                                    {% if test.project.owner == user %}
                                     <th>Actions</th>
+                                    {% endif %}
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -57,10 +57,10 @@
                                         <tr>
                                             <td>{{forloop.counter}}</td>
                                             <td>{{run.created}}</td>
-                                            {% for value in run.data%}
-                                                <td>{{value}}</td>
-                                            {%endfor%}
+                                            <td>{{run.data}}</td>
+                                            {% if test.project.owner == user %}
                                             <td><a class="btn btn-small btn-danger" href="/run/delete/{{run.key}}">Delete</a></td>
+                                            {% endif %}
                                         </tr>
                                     {%endfor%}
                                 </tbody>

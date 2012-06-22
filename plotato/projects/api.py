@@ -40,18 +40,49 @@ from tastypie import fields
 
 from tastypie.models import create_api_key
 from tastypie.authorization import DjangoAuthorization, Authorization
-from tastypie.authentication import Authentication
+from tastypie.authentication import Authentication, ApiKeyAuthentication
 from models import Project, Test, Run
 from tastyhacks import JSONApiField
 from jsonfield import JSONField
 from tastypie.validation import Validation
 
 from tastypie.fields import CharField
+from tastypie.models import ApiKey
 
 #Authentication answers the question “can they see this data?” 
 #Authorization answers the question “what objects can they modify?” 
 
+##API KEY:
 models.signals.post_save.connect(create_api_key, sender=User)
+
+class ApiKeyAuthorization(Authorization):
+    """
+    Only allows GET requests and ApiKey Authorized Posts.
+    """
+
+    def is_authorized(self, request, object=None):
+        """
+        Allow any ``GET`` request.
+        """
+        if request.method == 'GET':
+            return True
+        else:
+            username   = request.META.get('HTTP_X_PLOTATO_USERNAME')
+            api_key    = request.META.get('HTTP_X_PLOTATO_APIKEY')
+            parent_key = request.GET.get('test')
+
+            print parent_key
+
+            if not username or not api_key:
+                return False
+            try:
+                user = User.objects.get(username=username)
+                ApiKey.objects.get(user=user, key=api_key)
+            except (User.DoesNotExist, User.MultipleObjectsReturned, ApiKey.DoesNotExist):
+                return False
+
+            
+            return True
 
 """
 class UserResource(ModelResource):
@@ -72,7 +103,7 @@ class ProjectResource(ModelResource):
         queryset = Project.objects.all()
         list_allowed_methods = ['get']
         authentication = Authentication()
-        authorization = Authorization()
+        authorization = ApiKeyAuthorization()
 
     #def apply_authorization_limits(self, request, object_list):
     #    return object_list.filter(owner=request.user)
@@ -85,60 +116,35 @@ class TestResource(ModelResource):
         queryset = Test.objects.all()
         list_allowed_methods = ['get', 'post']
         authentication = Authentication()
-        authorization = Authorization()
+        authorization = ApiKeyAuthorization()
     #def apply_authorization_limits(self, request, object_list):
     #    return object_list.filter(project__owner=request.user)
 
 class IRunResource(ModelResource):
     """
-    ModelResource subclass that handles geometry fields as GeoJSON.
+    ModelResource subclass that handles JSON fields as JSONApiField.
     """
-
-    
-
     @classmethod
     def api_field_from_django_field(cls, f, default=CharField):
         """
-        Overrides default field handling to support custom GeometryApiField.
+        Overrides default field handling to support custom JSONApiField.
         """
         if isinstance(f, JSONField):
             return JSONApiField
     
         return super(IRunResource, cls).api_field_from_django_field(f, default)
 
-class AwesomeValidation(Validation):
-    def is_valid(self, bundle, request=None):
-        if not bundle.data:
-            return {'__all__': 'Not quite what I had in mind.'}
-
-        errors = {}
-
-        for key, value in bundle.data.items():
-            if not isinstance(value, basestring):
-                continue
-
-            if not 'awesome' in value:
-                errors[key] = ['NOT ENOUGH AWESOME. NEEDS MORE.']
-
-        return errors
-
 class RunResource(IRunResource):
     #Resource for Run()
     test = fields.ToOneField(TestResource, 'test')
+    
+    #http://stackoverflow.com/questions/7149866/send-an-authenticated-post-request-to-tastypie
 
     class Meta:
         queryset = Run.objects.all()
         authentication = Authentication()
-        authorization = Authorization()
+        authorization = ApiKeyAuthorization() #CustomApiKeyAuthentication()
         list_allowed_methods = ['get', 'post']
-    
-    def dehydrate(self, bundle):
-        print "dehydrate"
-        return bundle
 
-    def hydrate(self, bundle):
-        print "hydrate"
-        return bundle
-
-    #def apply_authorization_limits(self, request, object_list):
-    #    return object_list.filter(project__owner=request.user)
+    def apply_authorization_limits(self, request, object_list):
+        return object_list.filter(project__owner=request.user)

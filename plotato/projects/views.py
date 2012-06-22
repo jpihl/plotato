@@ -153,7 +153,7 @@ def create_user(request):
         login(request, new_user)
         
         return redirect(home)
-    return render_to_response('form.html',
+    return render_to_response('user_form.html',
                               {'form': form},
                               context_instance=RequestContext(request))
 
@@ -168,7 +168,7 @@ def edit_user(request):
             form.save()
             messages.add_message(request, messages.INFO, 'The user has been successfully modified.')
             return redirect(home)
-    return render_to_response('form.html',
+    return render_to_response('user_form.html',
                               {'form': form},
                               context_instance=RequestContext(request))
 

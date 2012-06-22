@@ -46,24 +46,26 @@ def add_test():
 def add_run():
     print "Adding Run..."
     #settings:
-    test_key      = "76b88158-9dd5-11e1-acc9-001f29a3c04e"
+    test_key      = "6ee0617c-a83d-11e1-82ca-001f29a3c04e"
     test          = "/api/v1/test/" + test_key + "/"
     
-    data          = {"revison": 42, "value": "Very Pink!", "List of Death": [1,2,3,4,5]}
+    data          = [{"revison": 42, "value": "Very Pink!", "List of Death": [1,2,3,4,5]}]
     
     request_data = json.dumps(
         {
             'test': test,
-            'data': json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
+            'data': data,
+            
         }
     )
-
     print request_data
 
     request = urllib2.Request(
         rest_url + "run/",
         data=request_data,
-        headers={'Content-Type':'application/json'}
+        headers={'Content-Type':'application/json',
+                 'X-PLOTATO-APIKEY': "5d90b5147be6adb3ba6c799fa7466d424f44361a",
+                 'X-PLOTATO-USERNAME': "wahwah"}
     )
 
     try:
