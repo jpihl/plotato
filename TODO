@@ -1,5 +1,4 @@
-Provide better tools e.g. well documented python functions for insertion and extraction of data.
-
 Cache the plots and provide the user with a refresh button.
+    http://stackoverflow.com/questions/1308386/programmatically-saving-image-to-django-imagefield
 
 Fix the threading error happening when plotting

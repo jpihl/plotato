@@ -19,31 +19,33 @@ def home(request):
 def about(request):
     return render_to_response('about.html', {}, context_instance=RequestContext(request))
 
-"""
-PROJECTS
-"""
+
 def details_project(request, project_id):
+    """ Project Details.
+
+    """ 
     project = get_object_or_404(Project, pk=project_id)
     return render_to_response('project_details.html',
                               {'project': project},
                               context_instance=RequestContext(request))
+
 @admin_only
 def create_project(request):
-    """
-    Create a new Project.
+    """ Create a new Project.
+
     """
     form = ProjectForm(request.POST or None)
     if form.is_valid():
         new_project = form.save()
-        #messages.add_message(request, messages.SUCCESS, 'The project has been successfully created.')
         return redirect(details_project, project_id=new_project.key)
     return render_to_response('form.html',
                               {'form': form},
                               context_instance=RequestContext(request))
+
 @admin_only
 def edit_project(request, project_id):
-    """
-    Edit Project.
+    """ Edit Project.
+
     """
     project = get_object_or_404(Project, pk=project_id)
     if request.method == "POST":
@@ -58,8 +60,12 @@ def edit_project(request, project_id):
     return render_to_response('form.html',
                               {'form': form},
                               context_instance=RequestContext(request))
+
 @admin_only
 def delete_project(request, project_id):
+    """ Delete Project.
+
+    """
     p = get_object_or_404(Project, pk=project_id)
     p.delete()
 
@@ -67,18 +73,19 @@ def delete_project(request, project_id):
     return redirect(home)
 
 
-"""
-TESTS
-"""
 def details_test(request, test_id):
+    """ Test Details.
+
+    """
     test = get_object_or_404(Test, pk=test_id)
     return render_to_response('test_details.html',
                               {'test': test},
                               context_instance=RequestContext(request))
+
 @admin_only
 def create_test(request, project_id):
-    """
-    Create a new Test.
+    """ Create a new Test.
+
     """
     project = get_object_or_404(Project, pk=project_id)
     form = TestForm(request.POST or None)
@@ -95,8 +102,8 @@ def create_test(request, project_id):
 
 @admin_only
 def edit_test(request, test_id):
-    """
-    Edit Test.
+    """ Edit Test.
+
     """  
     test = get_object_or_404(Test, pk=test_id)
     if request.method == "POST":
@@ -115,6 +122,9 @@ def edit_test(request, test_id):
 
 @admin_only
 def delete_test(request, test_id):
+    """ Delete Test.
+
+    """ 
     test = get_object_or_404(Test, pk=test_id)
     project = test.project
     test.delete()
@@ -122,11 +132,12 @@ def delete_test(request, test_id):
     messages.add_message(request, messages.WARNING, 'Test "{0}" deleted.'.format(test.name))
     return redirect(details_project, project_id = project.key)
 
-"""
-RUNS
-"""
+
 @admin_only
 def delete_run(request, run_id):
+    """ Delete Run.
+
+    """ 
     run = get_object_or_404(Run, pk=run_id)
     test = run.test
     run.delete()
@@ -134,6 +145,9 @@ def delete_run(request, run_id):
 
 @admin_only
 def delete_runs(request, test_id):
+    """ Delete Runs.
+
+    """ 
     test = get_object_or_404(Test, pk=test_id)
     runs = test.runs.all()
     messages.add_message(request, messages.WARNING, '{0} run(s) deleted.'.format(len(runs)))
@@ -142,30 +156,20 @@ def delete_runs(request, test_id):
 
     return redirect(details_test, test_id = test.key)
 
-"""
-PLOTS
-"""
 
-def show_plot(request, plot_id, x_val = 0, y_val = 0):
+def details_plot(request, plot_id):
+    """ Plot Details.
+
+    """
     plot = get_object_or_404(Plot, pk=plot_id)
-    f = figure()
-    try:
-        exec os.linesep.join(plot.code.splitlines())
-    except Exception, e:
-        return redirect('http://placehold.it/' + x_val + 'x' + y_val + "&text="+e.args[0])
-
-    matplotlib.pyplot.close(f)
-    canvas = FigureCanvasAgg(f)
-    if int(x_val) != 0 and int(y_val) != 0:
-        f.set_size_inches((float(x_val)/80), (float(y_val)/80))
-    response = HttpResponse(content_type='image/png')
-    canvas.print_png(response)
-    return response
+    return render_to_response('plot_details.html',
+                             {'plot': plot},
+                              context_instance=RequestContext(request))
 
 @admin_only
 def create_plot(request, project_id):
-    """
-    Create a new Plot.
+    """ Create a new Plot.
+
     """
     project = get_object_or_404(Project, pk=project_id)
     form = PlotForm(request.POST or None)
@@ -182,8 +186,8 @@ def create_plot(request, project_id):
 
 @admin_only
 def edit_plot(request, plot_id):
-    """
-    Edit a plot.
+    """ Edit a plot.
+
     """
     plot = get_object_or_404(Plot, pk=plot_id)
     if request.method == "POST":
@@ -202,21 +206,35 @@ def edit_plot(request, plot_id):
 
 @admin_only
 def delete_plot(request, plot_id):
+    """ Delete Plot.
+
+    """
     plot = get_object_or_404(Plot, pk=plot_id)
     project = plot.project
     plot.delete()
     
     return redirect(details_project, project_id=project.key)
 
-def details_plot(request, plot_id):
-    plot = get_object_or_404(Plot, pk=plot_id)
-    return render_to_response('plot_details.html',
-                             {'plot': plot},
-                              context_instance=RequestContext(request))
+def show_plot(request, plot_id, x_val = 0, y_val = 0):
+    """ Generates Plot.
 
-"""
-LOGIN/LOGOUT
-"""
+    """
+    plot = get_object_or_404(Plot, pk=plot_id)
+    f = figure()
+    try:
+        exec os.linesep.join(plot.code.splitlines())
+    except Exception, e:
+        return redirect('http://placehold.it/' + x_val + 'x' + y_val + "&text="+e.args[0])
+
+    matplotlib.pyplot.close(f)
+    canvas = FigureCanvasAgg(f)
+    if int(x_val) != 0 and int(y_val) != 0:
+        f.set_size_inches((float(x_val)/80), (float(y_val)/80))
+    response = HttpResponse(content_type='image/png')
+    canvas.print_png(response)
+    return response
+
+
 def log_out(request):
     try:
         del request.session['is_authorized']

@@ -9,17 +9,19 @@ from jsonfield import JSONField
 from tastypie.fields import CharField
 from django.conf import settings
 
+from tastypie.constants import ALL, ALL_WITH_RELATIONS
+
 #Authentication answers the question “can they see this data?” 
 #Authorization answers the question “what objects can they modify?” 
 
 class PasswordAuthorization(Authorization):
-    """
-    Only allows GET requests and ApiKey Authorized Posts.
+    """Only allows GET requests and ApiKey Authorized Posts.
+
     """
 
     def is_authorized(self, request, object=None):
-        """
-        Allow any ``GET`` request.
+        """ Allow any ``GET`` request.
+
         """
         if request.method == 'GET':
             return True
@@ -31,17 +33,18 @@ class PasswordAuthorization(Authorization):
             return True
 
 class ProjectResource(ModelResource):
-    #Resource for Project()
-
     class Meta:
         queryset = Project.objects.all()
         list_allowed_methods = ['get']
         authentication = Authentication()
         authorization = PasswordAuthorization()
+        filtering = {
+            "key"    : ALL,
+            "slug"   : ('exact', 'startswith',), 
+            "created": ('exact', 'range', 'gt', 'gte', 'lt', 'lte'),    
+        }
 
 class TestResource(ModelResource):
-    #Resource for Test()
-
     project = fields.ToOneField(ProjectResource, 'project')
 
     class Meta:
@@ -49,15 +52,19 @@ class TestResource(ModelResource):
         list_allowed_methods = ['get', 'post']
         authentication = Authentication()
         authorization = PasswordAuthorization()
+        filtering = {
+            "project": ALL,
+            "created": ('exact', 'range', 'gt', 'gte', 'lt', 'lte'),   
+        }
 
 class IRunResource(ModelResource):
-    """
-    ModelResource subclass that handles JSON fields as JSONApiField.
+    """ ModelResource subclass that handles JSON fields as JSONApiField.
+
     """
     @classmethod
     def api_field_from_django_field(cls, f, default=CharField):
-        """
-        Overrides default field handling to support custom JSONApiField.
+        """Overrides default field handling to support custom JSONApiField.
+        
         """
         if isinstance(f, JSONField):
             return JSONApiField
@@ -70,5 +77,10 @@ class RunResource(IRunResource):
 
     class Meta:
         queryset = Run.objects.all()
+        list_allowed_methods = ['get', 'post']
         authentication = Authentication()
         authorization = PasswordAuthorization()
+        filtering = {
+            "test": ALL,
+            "created": ('exact', 'range', 'gt', 'gte', 'lt', 'lte'),    
+        }
