@@ -63,7 +63,7 @@ class IRunResource(ModelResource):
     """
     @classmethod
     def api_field_from_django_field(cls, f, default=CharField):
-        """Overrides default field handling to support custom JSONApiField.
+        """ Overrides default field handling to support custom JSONApiField.
         
         """
         if isinstance(f, JSONField):

@@ -13,6 +13,9 @@ from pylab import figure, axes, pie, title
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 import os
 
+from plotatoclient import PlotatoClient
+from django.contrib.sites.models import Site
+
 def home(request):
     return render_to_response('index.html', {'project_list':  Project.objects.all().order_by('name')}, context_instance=RequestContext(request))
 
@@ -219,6 +222,8 @@ def show_plot(request, plot_id, x_val = 0, y_val = 0):
     """ Generates Plot.
 
     """
+    plotatoClient = PlotatoClient("")
+    print Site.objects.get_current().domain
     plot = get_object_or_404(Plot, pk=plot_id)
     f = figure()
     try:

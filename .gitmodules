@@ -1,0 +1,3 @@
+[submodule "plotato/plotato-client"]
+	path = plotato/plotato-client
+	url = git://github.com/jpihl/plotato-client.git

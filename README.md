@@ -29,6 +29,8 @@ Obtain the url to your git repository.
 
 ```bash
 git clone git@github.com:jpihl/plotato.git plotato
+git submodule init
+git submodule update
 ```
 
 ### Install requirements ###

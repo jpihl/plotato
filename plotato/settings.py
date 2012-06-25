@@ -1,8 +1,13 @@
 # Global settings for plotato project.
 import os
+import sys
+
+
 
 PROJECT_DIR = os.path.dirname(__file__)
 PUBLIC_DIR = os.path.join(PROJECT_DIR, 'public')
+
+sys.path.append(os.path.join(PROJECT_DIR, 'plotato-client'))
 
 DEBUG = False
 TEMPLATE_DEBUG = True
