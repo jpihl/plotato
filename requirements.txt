@@ -2,3 +2,5 @@ django>=1.4
 
 # tastypie
 django-tastypie
+
+jsonfield

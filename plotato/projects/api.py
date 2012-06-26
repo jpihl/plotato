@@ -4,15 +4,14 @@ from tastypie import fields
 from tastypie.authorization import Authorization
 from tastypie.authentication import Authentication
 from models import Project, Test, Run
-from tastyhacks import JSONApiField
 from jsonfield import JSONField
-from tastypie.fields import CharField
+from tastypie.fields import ApiField, CharField
 from django.conf import settings
 
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 
 #Authentication answers the question “can they see this data?” 
-#Authorization answers the question “what objects can they modify?” 
+#Authorization answers the question “what objects can they modify?”
 
 class PasswordAuthorization(Authorization):
     """Only allows GET requests and ApiKey Authorized Posts.
@@ -56,6 +55,22 @@ class TestResource(ModelResource):
             "project": ALL,
             "created": ('exact', 'range', 'gt', 'gte', 'lt', 'lte'),   
         }
+
+class JSONApiField(ApiField):
+    """
+Custom ApiField for dealing with data from custom JSONFields.
+"""
+    dehydrated_type = 'json'
+    help_text = 'JSON structured data.'
+    
+    def dehydrate(self, obj):
+        return self.convert(super(JSONApiField, self).dehydrate(obj))
+    
+    def convert(self, value):
+        if value is None:
+            return None
+        
+        return value
 
 class IRunResource(ModelResource):
     """ ModelResource subclass that handles JSON fields as JSONApiField.
