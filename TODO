@@ -1,4 +1,6 @@
 Cache the plots and provide the user with a refresh button.
     http://stackoverflow.com/questions/1308386/programmatically-saving-image-to-django-imagefield
 
+Cache compiled code
+
 Fix the threading error happening when plotting

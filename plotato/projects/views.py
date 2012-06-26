@@ -222,14 +222,17 @@ def show_plot(request, plot_id, x_val = 0, y_val = 0):
     """ Generates Plot.
 
     """
-    plotatoClient = PlotatoClient("")
-    print Site.objects.get_current().domain
+    #import mtTkinter as Tkinter
     plot = get_object_or_404(Plot, pk=plot_id)
     f = figure()
+    plotatoClient = PlotatoClient("http://127.0.0.1:8000/api/v1/")
     try:
-        exec os.linesep.join(plot.code.splitlines())
+        ns = {"f": f, "plotatoClient": plotatoClient, "matplotlib": matplotlib, "figure" : figure}
+        code = compile(os.linesep.join(plot.code.splitlines()), '<string>', 'exec')
+        exec code in ns
     except Exception, e:
         return redirect('http://placehold.it/' + x_val + 'x' + y_val + "&text="+e.args[0])
+
 
     matplotlib.pyplot.close(f)
     canvas = FigureCanvasAgg(f)
