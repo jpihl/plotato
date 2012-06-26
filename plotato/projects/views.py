@@ -218,11 +218,12 @@ def delete_plot(request, plot_id):
     
     return redirect(details_project, project_id=project.key)
 
+
 def show_plot(request, plot_id, x_val = 0, y_val = 0):
     """ Generates Plot.
 
     """
-    #import mtTkinter as Tkinter
+
     plot = get_object_or_404(Plot, pk=plot_id)
     f = figure()
     plotatoClient = PlotatoClient("http://127.0.0.1:8000/api/v1/")
@@ -233,11 +234,10 @@ def show_plot(request, plot_id, x_val = 0, y_val = 0):
     except Exception, e:
         return redirect('http://placehold.it/' + x_val + 'x' + y_val + "&text="+e.args[0])
 
-
-    matplotlib.pyplot.close(f)
-    canvas = FigureCanvasAgg(f)
     if int(x_val) != 0 and int(y_val) != 0:
         f.set_size_inches((float(x_val)/80), (float(y_val)/80))
+
+    canvas = FigureCanvasAgg(f)
     response = HttpResponse(content_type='image/png')
     canvas.print_png(response)
     return response
