@@ -37,26 +37,26 @@ onload="prettyPrint()"
                     {{ plot.description }}
                     </p>
                 </div>
-                <div class="span6">
-                    <div class="span5">
+                <div class="span9">
                         <div class="page-header">
                             <h2>The Plot</h2>
                         </div>
                         <ul class="thumbnails">
-                            <li class="span5">
-                              <a href="/plot/{{plot.pk}}/675x450" class="thumbnail">
-                                <img src="/plot/{{plot.pk}}/675x450" alt="">
+                            <li class="span6">
+                              <a href="/plot/{{plot.pk}}" class="thumbnail">
+                                <img src="/plot/{{plot.pk}}?{{plot.updated.microsecond}}" alt="">
                               </a>
                             </li>
                         </ul>
-                    </div>
                 </div>
-                <div class="span3">
-                    <div class="page-header">
-                        <h2>The Code</h2>
-                    </div>
-                        <pre class="prettyprint linenums" style="margin-bottom: 9px;">{% for c in plot.code.splitlines%}{{c}}
+                <div class="row pull-right">
+                    <div class="span9">
+                        <div class="page-header">
+                            <h2>The Code</h2>
+                        </div>
+                            <pre class="prettyprint linenums" style="margin-bottom: 9px;">{% for c in plot.code.splitlines%}{{c}}
 {% endfor %}</pre>
+                    </div>
                 </div>
             </div>
         </div>

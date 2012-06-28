@@ -19,7 +19,7 @@
     <div class="span3">
       <div class="thumbnail">
         {% if project.plots.get_query_set %}
-        <img src="/plot/{{project.plots.get_query_set.0.key}}/260x180" alt="">
+        <a href="/plot/{{project.plots.get_query_set.0.key}}/"><img src="/plot/{{project.plots.get_query_set.0.key}}?{{project.plots.get_query_set.0.updated.microsecond}}" alt=""></a>
         {% endif %}
         <div class="caption">
           <h5>{{ project.name }}</h5>

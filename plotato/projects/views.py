@@ -6,15 +6,10 @@ from forms import ProjectForm, TestForm, PlotForm
 from django.template import RequestContext
 from django.utils.encoding import iri_to_uri
 from django.conf import settings
-
 from django.http import HttpResponse
-import matplotlib.pyplot
-from pylab import figure, axes, pie, title
-from matplotlib.backends.backend_agg import FigureCanvasAgg
-import os
 
-from plotatoclient import PlotatoClient
-from django.contrib.sites.models import Site
+from datetime import datetime
+import pytz
 
 def home(request):
     return render_to_response('index.html', {'project_list':  Project.objects.all().order_by('name')}, context_instance=RequestContext(request))
@@ -218,29 +213,41 @@ def delete_plot(request, plot_id):
     
     return redirect(details_project, project_id=project.key)
 
+def refresh_plot(request, plot_id):
+    """ refresh Plot.
+    
+    """
+    plot = get_object_or_404(Plot, pk=plot_id)
+    plot.refresh()
+    plot.save()
+    return redirect(show_plot, plot_id=plot_id)
+
+
 
 def show_plot(request, plot_id, x_val = 0, y_val = 0):
-    """ Generates Plot.
+    """ Returns Plot.
 
     """
 
     plot = get_object_or_404(Plot, pk=plot_id)
-    f = figure()
-    plotatoClient = PlotatoClient("http://127.0.0.1:8000/api/v1/")
-    try:
-        ns = {"f": f, "plotatoClient": plotatoClient, "matplotlib": matplotlib, "figure" : figure}
-        code = compile(os.linesep.join(plot.code.splitlines()), '<string>', 'exec')
-        exec code in ns
-    except Exception, e:
-        return redirect('http://placehold.it/' + x_val + 'x' + y_val + "&text="+e.args[0])
 
     if int(x_val) != 0 and int(y_val) != 0:
-        f.set_size_inches((float(x_val)/80), (float(y_val)/80))
+        ##generate plot in different size
+        #f.set_size_inches((float(x_val)/80), (float(y_val)/80))
+        return
 
-    canvas = FigureCanvasAgg(f)
-    response = HttpResponse(content_type='image/png')
-    canvas.print_png(response)
-    return response
+
+    # If the plot is older than one hour, update it.
+    now = datetime.now(pytz.utc)
+    if (now - plot.updated).total_seconds() > 3600:
+        plot.refresh()
+        plot.save()
+
+    if plot.error != "":
+        return redirect("http://placehold.it/800x600&text="+plot.error)
+
+    image_data = open(plot.image(), "rb").read()
+    return HttpResponse(image_data, mimetype="image/png")
 
 
 def log_out(request):
@@ -254,8 +261,6 @@ def log_out(request):
 
 def log_in(request):
     password = request.POST['password']
-    print settings.ADMIN_PASSWORD
-    print password
     if password == settings.ADMIN_PASSWORD:
 
         if not request.POST.get('remember_me', None):

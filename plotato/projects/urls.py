@@ -31,7 +31,8 @@ urlpatterns = patterns('plotato.projects',
     url(r'^plot/create/(?P<project_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                       'views.create_plot'),
     url(r'^plot/edit/(?P<plot_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                            'views.edit_plot'),
     url(r'^plot/delete/(?P<plot_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                          'views.delete_plot'),
-    url(r'^plot/details/(?P<plot_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                         'views.details_plot')
+    url(r'^plot/details/(?P<plot_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$',                         'views.details_plot'),
+    url(r'^plot/refresh/(?P<plot_id>[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/$',                         'views.refresh_plot')
 
 )
 

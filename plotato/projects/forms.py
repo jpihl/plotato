@@ -19,6 +19,7 @@ class TestForm(forms.ModelForm):
 class PlotForm(forms.ModelForm):
   class Meta:
     model = Plot
+    exclude = ("error",)
   
   def getKind(self):
     return "Plot"

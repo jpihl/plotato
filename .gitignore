@@ -52,3 +52,7 @@ atlassian-ide-plugin.xml
 # SQLite
 *.db
 *.sqlite
+
+
+#Plotato
+plot-*.png

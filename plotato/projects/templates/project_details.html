@@ -61,11 +61,13 @@
                                 {% for plot in project.plots.all %}
                                 <li class="span3">
                                   <div class="thumbnail">
-                                    <img src="/plot/{{plot.key}}/260x180" alt="">
+                                    <a href="/plot/{{plot.key}}/"> <img src="/plot/{{plot.key}}/?{{plot.updated.microsecond}}" alt=""></a>
                                     <div class="caption">
                                       <h5>{{plot.name}}</h5>
                                       <p>{{plot.description}}</p>
-                                      <p><a href="/plot/details/{{plot.key}}" class="btn btn-primary">Details</a></p>
+                                      <p>
+                                        <a href="/plot/details/{{plot.key}}" class="btn btn-primary">Details</a>
+                                      </p>
                                     </div>
                                   </div>
                                 </li>
