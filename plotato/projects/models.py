@@ -73,5 +73,6 @@ class Plot(models.Model):
         f.savefig(self.image())
         self.error = ""
         return
+
     def image(self):
         return os.path.join('plotato','media','plots', "plot-{0}.png".format(self.key))

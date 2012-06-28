@@ -3,19 +3,14 @@ Plotato is a django 1.4 web application for storing data and presenting it with 
 
 ## Prerequisites ##
 
-- python >= 2.5
+- python >= 2.7
 - pip
 - virtualenv/wrapper (optional)
 
 ## Installation ##
 ### Creating the environment ###
 Create a virtual python environment for the project.
-If you're not using virtualenv or virtualenvwrapper you may skip this step.
-
-#### For virtualenvwrapper ####
-```bash
-mkvirtualenv --no-site-packages plotato-env
-```
+If you're not using virtualenv you may skip this step.
 
 #### For virtualenv ####
 ```bash
@@ -28,7 +23,7 @@ source bin/activate
 Obtain the url to your git repository.
 
 ```bash
-git clone git@github.com:jpihl/plotato.git plotato
+git clone git://github.com/jpihl/plotato.git plotato
 git submodule init
 git submodule update
 ```
