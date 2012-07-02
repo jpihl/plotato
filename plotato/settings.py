@@ -109,6 +109,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.core.context_processors.request',
+    'plotato.projects.context_processors.site_name'
 )
 
 FIXTURE_DIRS = (

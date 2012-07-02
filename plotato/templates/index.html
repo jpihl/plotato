@@ -2,9 +2,9 @@
 
 {% block content %}
 <div class="hero-unit">
-  <h1>Welcome to plotato!</h1>
+  <h1>Welcome to {{SITE_NAME}}!</h1>
   <p>
-    This web appliction is designed to present the results using user designed plots. The plots are generated using matplotlib. This site also provides a RESTapi which can be used for uploading results.
+    This web application is designed to present the results using user designed plots. The plots are generated using matplotlib. This site also provides a RESTapi which can be used for uploading results.
   </p>
   <p>
     {% if request.session.is_authorized %}
