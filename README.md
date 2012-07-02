@@ -31,7 +31,6 @@ git submodule update
 
 ### Install Requirements ###
 ```bash
-cd plotato
 pip install numpy
 pip install -r requirements.txt
 ```
