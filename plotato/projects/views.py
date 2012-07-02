@@ -239,7 +239,7 @@ def show_plot(request, plot_id, x_val = 0, y_val = 0):
 
     # If the plot is older than one hour, update it.
     now = datetime.now(pytz.utc)
-    if (now - plot.updated).total_seconds() > 3600:
+    if (now - plot.updated).total_seconds() > 3600 or plot.error != "":
         plot.refresh()
         plot.save()
 
