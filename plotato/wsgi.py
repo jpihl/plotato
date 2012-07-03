@@ -14,7 +14,9 @@ framework.
 
 """
 import os
+import sys
 
+sys.path.insert(0,os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2]))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "plotato.settings")
 
 #matplotlib fix
