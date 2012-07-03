@@ -23,6 +23,9 @@ onload="prettyPrint()"
                         <li class="nav-header">
                             Actions
                         </li>
+                        <li>
+                            <a href="/plot/refresh/{{plot.key}}/">Refresh Plot</a>
+                        </li>
                         {% if request.session.is_authorized %}
                         <li>
                             <a href="/plot/edit/{{plot.key}}">Edit This Plot</a>
@@ -43,8 +46,8 @@ onload="prettyPrint()"
                         </div>
                         <ul class="thumbnails">
                             <li class="span6">
-                              <a href="/plot/{{plot.pk}}" class="thumbnail">
-                                <img src="/plot/{{plot.pk}}?{{plot.updated.microsecond}}" alt="">
+                              <a href="{{plot.image_url}}" class="thumbnail">
+                                <img src="{{plot.image_url}}" alt="">
                               </a>
                             </li>
                         </ul>

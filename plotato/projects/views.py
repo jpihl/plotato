@@ -8,8 +8,7 @@ from django.utils.encoding import iri_to_uri
 from django.conf import settings
 from django.http import HttpResponse
 
-from datetime import datetime
-import pytz
+
 
 def home(request):
     return render_to_response('index.html', {'project_list':  Project.objects.all().order_by('name')}, context_instance=RequestContext(request))
@@ -220,35 +219,8 @@ def refresh_plot(request, plot_id):
     plot = get_object_or_404(Plot, pk=plot_id)
     plot.refresh()
     plot.save()
-    return redirect(show_plot, plot_id=plot_id)
-
-
-
-def show_plot(request, plot_id, x_val = 0, y_val = 0):
-    """ Returns Plot.
-
-    """
-
-    plot = get_object_or_404(Plot, pk=plot_id)
-
-    if int(x_val) != 0 and int(y_val) != 0:
-        ##generate plot in different size
-        #f.set_size_inches((float(x_val)/80), (float(y_val)/80))
-        return
-
-
-    # If the plot is older than one hour, update it.
-    now = datetime.now(pytz.utc)
-    if (now - plot.updated).total_seconds() > 3600 or plot.error != "":
-        plot.refresh()
-        plot.save()
-
-    if plot.error != "":
-        return redirect("http://placehold.it/800x600&text="+plot.error)
-
-    image_data = open(plot.image(), "rb").read()
-    return HttpResponse(image_data, mimetype="image/png")
-
+    messages.add_message(request, messages.INFO, 'The plot has been refreshed.')
+    return HttpResponseReload(request)
 
 def log_out(request):
     try:
